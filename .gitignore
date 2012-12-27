@@ -1,4 +1,10 @@
+# Node
+node_modules
+npm-debug.log
+
 lib-cov
+
+# Ignored Extensions
 *.seed
 *.log
 *.csv
@@ -6,9 +12,20 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.diff
+*.swp
+*.rej
+
+# IDEs
+.cache
+.project
+.settings
+.idea
 
 pids
 logs
 results
 
-npm-debug.log
+#local config
+config/runtime.json
+config/production.json
