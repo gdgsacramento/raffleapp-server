@@ -1,6 +1,6 @@
 ###raffleapp-server
-This is the angular.js/node.js/mongoDB server application for raffle application.  This is a POC application for the 
-angular/node/mongo stack.  It is used to determine best practices for developing and testing this stack.
+This is a angular.js/node.js/mongoDB server application for a raffle application.  This is a proof of concept application for the 
+angular/node/mongo stack.  It is used to determine best practices for developing and testing with these technologies.
 
 ##Project Setup
   * Install and have MongoDB running.  Alternatively you can use a hosted (MongoLab,etc.) instance.  You must specify a `config/development.json` file to point to a hosted mongo instance.  The `config\default.json` assumes a local instance.
