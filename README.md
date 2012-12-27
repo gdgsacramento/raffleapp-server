@@ -1,4 +1,6 @@
-###raffleapp-server
+[![Build Status](https://travis-ci.org/gdgsacramento/raffleapp-server.png)](https://travis-ci.org/gdgsacramento/raffleapp-server)
+
+#raffleapp-server
 This is a angular.js/node.js/mongoDB server application for a raffle application.  This is a proof of concept application for the 
 angular/node/mongo stack.  It is used to determine best practices for developing and testing with these technologies.
 
