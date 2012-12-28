@@ -5,7 +5,7 @@ This is a angular.js/node.js/mongoDB server application for a raffle application
 angular/node/mongo stack.  It is used to determine best practices for developing and testing with these technologies.
 
 ##Project Setup
-  * Install and have MongoDB running.  Alternatively you can use a hosted (MongoLab,etc.) instance.  You must specify a `config/development.json` file to point to a hosted mongo instance.  The `config\default.json` assumes a local instance.
+  * Install and have MongoDB running.  Alternatively you can use a hosted (MongoLab,etc.) instance.  You must specify a `config/development.json` file to point to a hosted mongo instance.  The `config/default.json` assumes a local instance.
   * Create a raffleapp db in your mongo instance.  Type `use raffleapp` in mongo shell.
   * Run `npm install`.  This will install dependencies needed for this applicaiton.
   * Run `node app.js`.  This should start the server.  You will then be able to navigate to localhost:8080 in your browser to see the application.
