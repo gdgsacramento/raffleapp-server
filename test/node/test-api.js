@@ -6,18 +6,18 @@ var SERVER_CONFIG;
 /*
 Tests the REST CRUD for raffle
  */
-describe('Test raffle CRUD ', function() {
+describe('Test raffle CRUD', function() {
 
     before(function(done) {
         process.env.NODE_ENV = 'test';
         SERVER_CONFIG = require('config').SERVER;
-        server = require('../server');
+        server = require('../../server');
         server.start(done);
     });
 
     var raffleId;
 
-    it('list raffle', function(done) {
+    it('should list no raffles', function(done) {
         request.get({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle', json:true}, function(err, res, body) {
             var raffleArray = body;
             raffleArray.should.have.lengthOf(0);
@@ -25,7 +25,7 @@ describe('Test raffle CRUD ', function() {
         });
     });
 
-    it('create raffle', function(done) {
+    it('should create one raffle', function(done) {
         request.post({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle',json:{raffle_name:"test raffle"}}, function(err, res, body) {
             body.should.have.lengthOf(1);
             var raffle = body[0];
@@ -37,7 +37,7 @@ describe('Test raffle CRUD ', function() {
         });
     });
 
-    it('list raffle', function(done) {
+    it('should list the newly created raffle', function(done) {
         request.get({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle', json:true}, function(err, res, body) {
             var raffleArray = body;
             raffleArray.should.have.lengthOf(1);
@@ -45,23 +45,19 @@ describe('Test raffle CRUD ', function() {
         });
     });
 
-    it('delete raffle', function(done) {
+    it('should delete the new raffle', function(done) {
         request.del({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle/'+raffleId, json:true}, function(err, res, body) {
             res.statusCode.should.equal(200);
             done();
         });
     });
 
-    it('list raffle', function(done) {
+    it('should list no raffles again', function(done) {
         request.get({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle', json:true}, function(err, res, body) {
             var raffleArray = body;
             raffleArray.should.have.lengthOf(0);
             done();
         });
-    });
-
-    after(function() {
-        server.close();
     });
 
 });
