@@ -1,9 +1,12 @@
 {
   "scripts": {
-    "start": "server.js",
-    "test": "./node_modules/.bin/mocha --globals NODE_CONFIG ./test/node"
+    "start": "node app.js",
+    "start-test":"NODE_ENV=test node app.js",
+    "test": "npm run-script mocha-test; npm run-script angular-test",
+    "angular-test": "PHANTOMJS_BIN=./node_modules/phantomjs/lib/phantom/bin/phantomjs ./node_modules/.bin/testacular start ./test/angular/config/testacular-e2e.conf.js",
+    "mocha-test": "NODE_ENV=test ./node_modules/.bin/mocha --globals NODE_CONFIG ./test/node"
   },
-  "name":"devfest-20120922",
+  "name":"raffleapp-server",
   "version": "0.0.1",
   "engines": {
     "node": "0.8.x"
@@ -16,6 +19,8 @@
   "devDependencies": {
     "mocha": "1.7.x",
     "request": "2.12.x",
-    "should": "1.2.x"
+    "should": "1.2.x",
+    "testacular": "0.4.x",
+    "phantomjs": "0.2.x"
   }
 }

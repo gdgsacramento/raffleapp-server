@@ -1,19 +1,12 @@
 var request = require('request');
 var should = require('should');
 var server;
-var SERVER_CONFIG;
+var SERVER_CONFIG = require('config').SERVER;
 
 /*
 Tests the REST CRUD for raffle
  */
 describe('Test raffle CRUD', function() {
-
-    before(function(done) {
-        process.env.NODE_ENV = 'test';
-        SERVER_CONFIG = require('config').SERVER;
-        server = require('../../server');
-        server.start(done);
-    });
 
     var raffleId;
 

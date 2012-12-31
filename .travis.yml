@@ -1,6 +1,12 @@
  language: node_js
+
  node_js:
    - "0.8"
    - "0.6"
+
  services:
    - mongodb
+
+ before_script:
+   - npm run-script start-test > /dev/null &
+   - sleep 1 #give server time to start
