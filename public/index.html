@@ -2,30 +2,72 @@
 <html ng-app='myApp'>
   <head>
   	<title>Raffle Application</title>
+     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <style type="text/css">
+          body {
+              padding-top: 60px;
+              padding-bottom: 40px;
+          }
+          .sidebar-nav {
+              padding: 9px 0;
+          }
+      </style>
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href='/css/main.css' rel='stylesheet' type='text/css'>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
     <script src="/js/RaffleController.js"></script>
   </head>
   <body ng-controller="RaffleController">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+              <div class="container-fluid">
+                  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </a>
+                  <a class="brand" href="#">Raffle Application</a>
+                  <div class="nav-collapse collapse">
+                      <p class="navbar-text pull-right">
+                          Logged in as <a href="#" class="navbar-link">Username</a>
+                      </p>
+                      <ul class="nav">
+                          <li class="active"><a href="#">Home</a></li>
+                          <li><a href="#about">About</a></li>
+                          <li><a href="#contact">Contact</a></li>
+                      </ul>
+                  </div><!--/.nav-collapse -->
+              </div>
+          </div>
+      </div>
+      <div class="container-fluid">
+          <div class="row-fluid">
+              <div class="span4">
+                  <div class="well sidebar-nav">
+                      <ul class="nav nav-list">
+                          <form class="form-inline">
+                              <input type="text"  ng-model="raffle.raffle_name" placeholder="Enter raffle name">
+                              <button id="create_button" class="btn" ng-click="createRaffle()">Create</button>
+                          </form>
+                          <form class="form-inline">
+                              <input type="text" ng-model="ticket.user_name" placeholder="Enter ticket">
+                              <button class="btn" ng-click="createTicket()">New Ticket</button>
+                          </form>
+                      </ul>
+                  </div><!--/.well -->
+              </div><!--/span-->
+              <div class="span5 raffles">
+                  <div class="well" ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id)">
+                      {{raffle.name}}<button class="btn btn-mini" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button>
+                  </div>
+              </div> <!--/span-->
+          </div><!--/row-->
 
-  	<div class="title">
-  		<h1>Raffle Application</h1>
-  	</div>
-  	
-  	<div class="create_raffle">
-  		<input type="text" ng-model="raffle.raffle_name" placeholder="Enter raffle name">
-  		<button ng-click="createRaffle()">Create</button>
-  	</div>
+          <hr>
 
-    <div class="create_ticket">
-      <input type="text" ng-model="ticket.user_name" placeholder="Enter ticket">
-      <button ng-click="createTicket()">New Ticket</button>
-    
-    <div class="raffles">
-      <div ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id)">
-        {{raffle.name}}
-     </div>
-    </div>
-    
+          <footer>
+              <p>&copy; GDG Sacramento 2012</p>
+          </footer>
+      </div><!--/.fluid-container-->
   </body>
 </html>

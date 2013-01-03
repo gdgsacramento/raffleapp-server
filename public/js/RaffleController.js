@@ -3,7 +3,7 @@ var myApp = angular.module('myApp',[]);
 
 function RaffleController($scope, $http) {
 
-	$scope.raffle = { raffle_name : ""};
+  $scope.raffle = { raffle_name : ""};
 
   $scope.ticket = { raffle_id: "", user_name : ""};
 
@@ -24,10 +24,16 @@ function RaffleController($scope, $http) {
   	$scope.createRaffle = function() {
 
   		$http.post('/api/v1/raffle', $scope.raffle).success(function(data) {
-  		
   			$scope.raffles.push(data[0]);
+            $scope.raffle = { raffle_name : ""};
   		});
   	}
+
+    $scope.deleteRaffle = function(raffle) {
+        $http.delete('/api/v1/raffle/'+raffle._id).success(function(data) {
+            $scope.raffles.splice($scope.raffles.indexOf(raffle), 1); //indexOf not supported on IE
+        });
+    }
 
     $scope.createTicket = function() {
 
