@@ -14,5 +14,5 @@ angular/node/mongo stack.  It is used to determine best practices for developing
   * Install and have MongoDB running.  The tests are assuming a local mongo instance.
   * Create a raffleappTest in your mongo instance. Type `use raffleappTest` in mongo shell.
   * Run `npm install` if you have not already.
-  * Run 'npm run-script start-test` to run the node test server.
+  * Run `npm run-script start-test` to run the node test server.
   * Run `npm test`.  This should execute all tests.
