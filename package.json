@@ -15,14 +15,14 @@
   },
   "dependencies": {
     "config": "0.4.x",
-    "restify": "1.4.x",
+    "restify": "2.0.x",
     "mongodb": "1.2.x"
   },
   "devDependencies": {
-    "mocha": "1.7.x",
-    "request": "2.12.x",
-    "should": "1.2.x",
+    "mocha": "*",
+    "request": "*",
+    "should": "*",
     "testacular": "0.4.x",
-    "phantomjs": "0.2.x"
+    "phantomjs": "*"
   }
 }
