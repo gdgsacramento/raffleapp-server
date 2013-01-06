@@ -19,10 +19,10 @@
     "mongodb": "1.2.x"
   },
   "devDependencies": {
-    "mocha": "*",
-    "request": "*",
-    "should": "*",
+    "mocha": "1.7.x",
+    "request": "2.12.x",
+    "should": "1.2.x",
     "testacular": "0.4.x",
-    "phantomjs": "*"
+    "phantomjs": "0.2.x"
   }
 }
