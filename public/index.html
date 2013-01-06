@@ -2,16 +2,7 @@
 <html ng-app='myApp'>
   <head>
   	<title>Raffle Application</title>
-     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <style type="text/css">
-          body {
-              padding-top: 60px;
-              padding-bottom: 40px;
-          }
-          .sidebar-nav {
-              padding: 9px 0;
-          }
-      </style>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href='/css/main.css' rel='stylesheet' type='text/css'>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
@@ -57,8 +48,9 @@
                   </div><!--/.well -->
               </div><!--/span-->
               <div class="span5 raffles">
-                  <div class="well" ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id)">
-                      {{raffle.name}}<button class="btn btn-mini" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button>
+                  <div class="well {{raffle.isSelected}}-selected" ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id, $index)">
+                      Raffle: {{raffle.name}}<button class="btn btn-mini" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
+                      Tickets: {{raffle.tickets}}
                   </div>
               </div> <!--/span-->
           </div><!--/row-->
