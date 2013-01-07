@@ -7,18 +7,11 @@ var myAppModule = angular.module('myApp',[]);
 
 function RaffleController($scope, $http) {
 
-    var selectedRaffleIndex = 0;
+    var selectedRaffleIndex;
+
     $scope.ticket = { raffle_id: "", user_name : ""};
 
     $http.get('/api/v1/raffle').success(function(data) {
-
-        /*
-         * Init isSelected for CSS selection background color
-         */
-        for(var i = 0; i < data.length; i++) {
-
-            data[i].isSelected = "not";
-        }
 
         $scope.raffles = data;
     });
@@ -26,23 +19,37 @@ function RaffleController($scope, $http) {
     $scope.selectRaffle = function(raffleId, raffleIndex) {
 
         $scope.ticket.raffle_id = raffleId;
-        selectedRaffleIndex = raffleIndex;
 
         /*
          * Reset selected raffle background color
          */
-        for(var i = 0; i < $scope.raffles.length; i++) {
+        if(selectedRaffleIndex !== undefined) {
 
-            $scope.raffles[i].isSelected = "not";
+            $scope.raffles[selectedRaffleIndex].isSelectedClass = "";
         }
 
         /*
          * Change selected raffle's background color
          */
-        $scope.raffles[selectedRaffleIndex].isSelected = "is";
+        if(raffleIndex === selectedRaffleIndex) {
+
+            $scope.raffles[raffleIndex].isSelectedClass = "";
+            selectedRaffleIndex = undefined;
+        }
+        else {
+
+            $scope.raffles[raffleIndex].isSelectedClass = "select-raffle";
+            selectedRaffleIndex = raffleIndex;
+        }
     };
 
     $scope.createRaffle = function() {
+
+        if(!$scope.raffle || !$scope.raffle.raffle_name || $scope.raffle.raffle_name === "") {
+
+            // TODO: show message
+            return;
+        }
 
         $http.post('/api/v1/raffle', $scope.raffle).success(function(data) {
 
@@ -55,13 +62,38 @@ function RaffleController($scope, $http) {
 
         $http.delete('/api/v1/raffle/'+raffle._id).success(function(data) {
 
+            /*
+             * Reset selected raffle background color
+             */
+            if(selectedRaffleIndex || 0 === selectedRaffleIndex) {
+
+                $scope.raffles[selectedRaffleIndex].isSelectedClass = "";
+                selectedRaffleIndex = undefined;
+            }
+
             $scope.raffles.splice($scope.raffles.indexOf(raffle), 1); //indexOf not supported on IE
         });
     }
 
     $scope.createTicket = function() {
 
-        console.log($scope.ticket.user_name);
+
+        /*
+         * Check for missing ticket name
+         */
+        if(!$scope.ticket.user_name || $scope.ticket.user_name === "") {
+
+            // TODO: Show message
+            return;
+        }
+
+        /*
+         * If the user didn't select a raffle, we don't do anything
+         */
+        if(selectedRaffleIndex === undefined) {
+            // TODO: Show message
+            return;
+        }
 
         $http.post('/api/v1/ticket', $scope.ticket).success(function(data) {
 

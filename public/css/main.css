@@ -16,6 +16,6 @@ body {
     float:right;
 }
 
-.raffles div.is-selected {
+.raffles div.select-raffle {
     background-color: #ffcdcd;
 }

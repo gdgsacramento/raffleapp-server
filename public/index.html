@@ -48,7 +48,7 @@
                   </div><!--/.well -->
               </div><!--/span-->
               <div class="span5 raffles">
-                  <div class="well {{raffle.isSelected}}-selected" ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id, $index)">
+                  <div class="well" ng-class="raffle.isSelectedClass"  ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id, $index)">
                       Raffle: {{raffle.name}}<button class="btn btn-mini" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
                       Tickets: {{raffle.tickets}}
                   </div>
