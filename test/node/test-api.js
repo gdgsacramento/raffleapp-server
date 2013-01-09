@@ -11,7 +11,7 @@ describe('Test raffle CRUD', function() {
     var raffleId;
     var numberOfRaffles = 0;
 
-    it('should list no raffles', function(done) {
+    it('should list baseline raffles', function(done) {
 
         var options = {
             url: SERVER_CONFIG.URL + '/api/v1/raffle',
@@ -60,9 +60,8 @@ describe('Test raffle CRUD', function() {
 
             var raffle = body[0];
             raffleId = raffle._id;
-            raffle.should.have.property('name');
+            raffle.should.have.property('name', options.body.raffle_name);
             raffle.should.have.property('_id');
-            options.body.raffle_name.should.equal(raffle.name);
 
             done();
         });
@@ -103,7 +102,7 @@ describe('Test raffle CRUD', function() {
         });
     });
 
-    it('should list no raffles again', function(done) {
+    it('should list baseline raffles again', function(done) {
 
         var options = {
             url: SERVER_CONFIG.URL + '/api/v1/raffle',
