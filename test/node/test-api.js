@@ -19,6 +19,8 @@ describe('Test raffle CRUD', function() {
             json: true
         };
 
+        console.log("Mocha hitting "+options.url);
+
         request.get(options, function(err, res, body) {
 
             res.should.have.status(200);

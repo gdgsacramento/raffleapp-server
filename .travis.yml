@@ -7,7 +7,7 @@
    - mongodb
 
  before_script:
-   - npm run-script start-test > /dev/null &
+   - npm run-script start-test &
    - sleep 1 #give server time to start
 
  script:
