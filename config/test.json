@@ -1,10 +1,11 @@
-
 {
-    "MONGO": {
-        "URL_CONNECTION":"mongodb://localhost/raffleappTest"
-    },
-    "SERVER": {
-		"URL" : "http://localhost:9090",
-        "PORT":9090
-    }
+	"MONGO": {
+		"URL_CONNECTION":"mongodb://localhost/raffleappTest"
+	},
+	"SERVER": {
+		"URL":"http://localhost:9090",
+		"PORT":9090,
+		"HOSTNAME":"localhost"
+	}
 }
+

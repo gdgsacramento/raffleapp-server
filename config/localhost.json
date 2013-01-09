@@ -4,7 +4,7 @@
         "URL_CONNECTION":"mongodb://localhost/raffleapp"
     },
     "SERVER": {
-        "URL" : "http://localhost:8080",
+        "URL":"http://localhost:8080",
         "PORT":8080,
         "HOSTNAME":"localhost"
     }
