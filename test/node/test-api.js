@@ -1,11 +1,10 @@
 var should = require('should');
 var request = require('request');
-
-var server;
 var SERVER_CONFIG = require('config').SERVER;
 
+
 /*
-Tests the REST CRUD for raffle
+ * Testing the REST CRUD for raffle
  */
 describe('Test raffle CRUD', function() {
 
@@ -13,7 +12,14 @@ describe('Test raffle CRUD', function() {
     var numberOfRaffles = 0;
 
     it('should list no raffles', function(done) {
-        request.get({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle', json:true}, function(err, res, body) {
+
+        var options = {
+            url: SERVER_CONFIG.URL + '/api/v1/raffle',
+            timeout: 5000,
+            json: true
+        };
+
+        request.get(options, function(err, res, body) {
 
             res.should.have.status(200);
 
@@ -38,7 +44,15 @@ describe('Test raffle CRUD', function() {
     });
 
     it('should create one raffle', function(done) {
-        request.post({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle',json:{raffle_name:"test raffle"}}, function(err, res, body) {
+
+        var options = {
+            url: SERVER_CONFIG.URL + '/api/v1/raffle',
+            timeout: 5000,
+            json: true,
+            body: {raffle_name:"test raffle"}
+        };
+
+        request.post(options, function(err, res, body) {
 
             res.should.have.status(200);
 
@@ -48,14 +62,21 @@ describe('Test raffle CRUD', function() {
             raffleId = raffle._id;
             raffle.should.have.property('name');
             raffle.should.have.property('_id');
-            "test raffle".should.equal(raffle.name);
+            options.body.raffle_name.should.equal(raffle.name);
 
             done();
         });
     });
 
     it('should list the newly created raffle', function(done) {
-        request.get({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle', json:true}, function(err, res, body) {
+
+        var options = {
+            url: SERVER_CONFIG.URL + '/api/v1/raffle',
+            timeout: 5000,
+            json: true
+        };
+
+        request.get(options, function(err, res, body) {
 
             res.should.have.status(200);
 
@@ -67,7 +88,14 @@ describe('Test raffle CRUD', function() {
     });
 
     it('should delete the new raffle', function(done) {
-        request.del({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle/'+raffleId, json:true}, function(err, res, body) {
+
+        var options = {
+            url: SERVER_CONFIG.URL + '/api/v1/raffle/' + raffleId,
+            timeout: 5000,
+            json: true
+        };
+
+        request.del(options, function(err, res, body) {
 
             res.should.have.status(200);
 
@@ -76,7 +104,14 @@ describe('Test raffle CRUD', function() {
     });
 
     it('should list no raffles again', function(done) {
-        request.get({url:'http://localhost:'+SERVER_CONFIG.PORT+'/api/v1/raffle', json:true}, function(err, res, body) {
+
+        var options = {
+            url: SERVER_CONFIG.URL + '/api/v1/raffle',
+            timeout: 5000,
+            json: true
+        };
+
+        request.get(options, function(err, res, body) {
 
             res.should.have.status(200);
 

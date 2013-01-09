@@ -1,11 +1,11 @@
 
-    {
-      "MONGO": {
+{
+    "MONGO": {
         "URL_CONNECTION":"mongodb://localhost/raffleapp"
-      },
-      "SERVER": {
+    },
+    "SERVER": {
         "URL" : "http://localhost:8080",
         "PORT":8080,
         "HOSTNAME":"localhost"
-      }
     }
+}
