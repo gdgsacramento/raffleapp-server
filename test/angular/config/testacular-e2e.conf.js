@@ -13,7 +13,7 @@ browsers = ['Chrome'];
 singleRun = true;
 
 proxies = {
-  '/': 'http://localhost:9090/'
+  '/': 'http://localhost:8080/'
 };
 
 junitReporter = {
