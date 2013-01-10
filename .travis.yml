@@ -7,6 +7,9 @@
    - mongodb
 
  before_script:
+   - sudo rm -f /var/lib/mongodb/mongod.lock
+   - sudo service mongodb start
+   - sleep 1 #give time for mongo to start
    - npm run-script start-test  > /dev/null &
    - sleep 1 #give server time to start
 
