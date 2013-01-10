@@ -12,8 +12,11 @@ browsers = ['Chrome'];
 
 singleRun = true;
 
+captureTimeout = 5000;
+reportSlowerThan = 500;
+
 proxies = {
-  '/': 'http://localhost:8080/'
+  '/': 'http://localhost:9090/'
 };
 
 junitReporter = {
