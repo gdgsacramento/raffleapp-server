@@ -1,17 +1,15 @@
+'use strict';
 
 /*
- * http://docs.angularjs.org/guide/module
+ * Raffle App Controller
  */
-var myAppModule = angular.module('myApp',[]);
-
-
-function RaffleController($scope, $http) {
+function RaffleController($scope, restService) {
 
     var selectedRaffleIndex;
 
     $scope.ticket = { raffle_id: "", user_name : ""};
 
-    $http.get('/api/v1/raffle').success(function(data) {
+    restService.getRaffle(function(data) {
 
         $scope.raffles = data;
     });
@@ -51,7 +49,7 @@ function RaffleController($scope, $http) {
             return;
         }
 
-        $http.post('/api/v1/raffle', $scope.raffle).success(function(data) {
+        restService.postRaffle($scope.raffle, function(data) {
 
             $scope.raffles.push(data[0]);
             $scope.raffle = { raffle_name : ""};
@@ -60,7 +58,7 @@ function RaffleController($scope, $http) {
 
     $scope.deleteRaffle = function(raffle) {
 
-        $http.delete('/api/v1/raffle/'+raffle._id).success(function(data) {
+        restService.deleteRaffle(raffle, function(data) {
 
             /*
              * Reset selected raffle background color
@@ -95,7 +93,7 @@ function RaffleController($scope, $http) {
             return;
         }
 
-        $http.post('/api/v1/ticket', $scope.ticket).success(function(data) {
+        restService.postTicket($scope.ticket, function(data) {
 
             $scope.raffles[selectedRaffleIndex].tickets.push($scope.ticket.user_name);
             $scope.ticket.user_name = "";
@@ -103,7 +101,5 @@ function RaffleController($scope, $http) {
     }
 }
 
-/*
- * Dependency injection: http://docs.angularjs.org/guide/di
- */
-RaffleController.$inject = ['$scope', '$http'];
+RaffleController.$inject = ['$scope', 'restService'];
+//RaffleController.$inject = ['$scope', 'mockRestService'];
