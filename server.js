@@ -1,6 +1,7 @@
 
 var restify = require('restify');
 var api = require('./lib/api');
+var user = require('./lib/user');
 var www = require('./lib/www');
 var mongo = require('./lib/mongo');
 var SERVER = require('config').SERVER;
@@ -15,6 +16,13 @@ server.use(restify.acceptParser(server.acceptable));
 server.use(restify.authorizationParser());
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonBodyParser({ mapParams: false }));
+
+server.use(function authenticate(req, res, next) {
+    //console.log(req.username);
+    //console.log(req.authorization.basic.password);
+
+    return next();
+});
 
 /*
  * Create a new raffle
@@ -37,7 +45,6 @@ server.post('/api/v1/ticket', api.postTicketV1);
  * URL parameter:
  * :id = Raffle Id
  *
- * TEST: curl
  */
 server.del('/api/v1/raffle/:id', api.deleteRaffleV1);
 
@@ -57,6 +64,16 @@ server.get('/api/v1/winner/:id', api.getWinnerV1);
  */
 server.get('/api/v1/raffle', api.getRaffleV1);
 
+/**
+ * Google OAuth2 authentication.  This method will do the following.
+ * 1) Use authorization code to get google access token.
+ * 2) Get profile information from google.
+ * 3) Create or update user information
+ * 4) generate and return raffleapp access token and user id.
+ *
+ * POST Body: { "auth_code" : "4/6A9Ote_bnoyNcGatKJItg5SR_jpu.4tLyDGC9gFwVuJJVnL49Cc-qhbfoeAI" }
+ */
+server.post('/api/v1/auth', user.googleOAuth2);
 
 /*
  * Serve static content
