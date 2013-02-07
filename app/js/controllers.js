@@ -101,5 +101,20 @@ function RaffleController($scope, restService) {
     }
 }
 
+function UserController($scope, restService) {
+    if(localStorage.id) {
+        restService.getUserInfo(function(data) {
+            $scope.user = data;
+        });
+    } else {
+        $scope.user = {name:"Test Mode"};
+    }
+
+    $scope.signOutUser = function() {
+        restService.signOutUser();
+    }
+}
+
 RaffleController.$inject = ['$scope', 'restService'];
+UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];

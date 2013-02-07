@@ -20,8 +20,6 @@ server.use(restify.jsonBodyParser({ mapParams: false }));
 
 server.use(function authenticate(req, res, next) {
 
-
-
     if(req.url.indexOf('/api/') === 0 && req.url.indexOf('/api/v1/auth') !== 0 && AUTH.ENABLED) {
         console.log(req.url);
         var username = null;
@@ -85,6 +83,37 @@ server.get('/api/v1/winner/:id', api.getWinnerV1);
  * TEST: curl -i -X GET localhost:8080/api/v1/raffle
  */
 server.get('/api/v1/raffle', api.getRaffleV1);
+
+/**
+ * Get the user information.
+ */
+server.get('/api/v1/user', function(req, res, next) {
+    user.findUser({_id:mongo.objectID(req.username)}, function(err, user) {
+        if(err) {
+            console.log(err);
+            res.send(500);
+        } else {
+            res.send(200, user);
+        }
+        return next();
+    });
+});
+
+/**
+ * Log out current user.
+ */
+server.post('/api/v1/signout', function(req, res, next) {
+    user.removeAccessToken(mongo.objectID(req.username), function(err, number) {
+        if(err) {
+            console.log(err);
+            res.send(500);
+        } else {
+            console.log('deleting '+number);
+            res.send(200);
+        }
+        return next();
+    });
+});
 
 /**
  * Google OAuth2 authentication.  This method will do the following.

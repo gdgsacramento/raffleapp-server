@@ -98,6 +98,22 @@ describe('Test user functions', function() {
         });
     });
 
+    it('should remove an access token', function(done) {
+        user.upsertAccessToken('user-id', function(err, accessToken){
+            should.not.exist(err);
+            should.exist(accessToken);
+            user.removeAccessToken('user-id', function(err, number) {
+                should.not.exist(err);
+                number.should.equal(1);
+                user.findAccessToken('user-id', accessToken.token, function(err, theToken) {
+                    should.not.exist(err);
+                    should.not.exist(theToken);
+                    done();
+                });
+            });
+        });
+    });
+
 });
 
 var removeAllUsers = function(callback) {

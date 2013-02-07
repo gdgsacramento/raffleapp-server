@@ -10,7 +10,7 @@ raServices.factory('restService', ['$http', '$window', function(http, angularWin
     http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode( localStorage.id + ':' + localStorage.token);
 
     var redirectOnAuthFailed = function() {
-        angularWindow.location = '/landing.html';
+       angularWindow.location = '/landing.html';
     };
 
     /*
@@ -48,6 +48,19 @@ raServices.factory('restService', ['$http', '$window', function(http, angularWin
                     onSuccess(data);
                 })
                 .error(redirectOnAuthFailed);
+        },
+        getUserInfo:function(onSuccess) {
+            http.get('/api/v1/user')
+                .success(function(data) {
+                    onSuccess(data);
+                })
+                .error(redirectOnAuthFailed);
+        },
+        signOutUser:function() {
+            http.post('/api/v1/signout')
+                .success(function() {
+                    angularWindow.location = '/landing.html';
+                });
         }
     };
 }]);
