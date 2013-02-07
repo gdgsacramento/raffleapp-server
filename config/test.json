@@ -6,6 +6,9 @@
 		"URL":"http://localhost:9090",
 		"PORT":9090,
 		"HOSTNAME":"localhost"
-	}
+	},
+    "AUTH": {
+        "ENABLED":false
+    }
 }
 

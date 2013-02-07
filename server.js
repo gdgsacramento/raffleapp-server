@@ -5,6 +5,7 @@ var user = require('./lib/user');
 var www = require('./lib/www');
 var mongo = require('./lib/mongo');
 var SERVER = require('config').SERVER;
+var AUTH = require('config').AUTH;
 
 
 var server = restify.createServer({
@@ -18,10 +19,31 @@ server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonBodyParser({ mapParams: false }));
 
 server.use(function authenticate(req, res, next) {
-    //console.log(req.username);
-    //console.log(req.authorization.basic.password);
 
-    return next();
+
+
+    if(req.url.indexOf('/api/') === 0 && req.url.indexOf('/api/v1/auth') !== 0 && AUTH.ENABLED) {
+        console.log(req.url);
+        var username = null;
+        var password = null;
+        if(typeof req.authorization !== 'undefined' && typeof req.authorization.basic !== 'undefined') {
+            username = req.username;
+            password = req.authorization.basic.password;
+        }
+        user.findAccessToken(mongo.objectID(username), password, function(err, token) {
+            if(token !== null && token.token === req.authorization.basic.password) {
+                console.log("authorization success");
+                return next();
+            } else {
+                console.log("authorization failed");
+                return next(new restify.NotAuthorizedError('User is not authorized'));
+            }
+        });
+    } else {
+        return next();
+    }
+
+
 });
 
 /*

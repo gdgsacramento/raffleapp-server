@@ -97,6 +97,7 @@ describe('Test user functions', function() {
             });
         });
     });
+
 });
 
 var removeAllUsers = function(callback) {
