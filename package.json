@@ -1,15 +1,15 @@
 {
   "scripts": {
     "start": "node app.js",
-    "start-test":"NODE_ENV=test node app.js",
+    "start-test": "NODE_ENV=test node app.js",
     "test": "npm run-script test-mocha; npm run-script test-angular",
-    "test-travis":"npm run-script test-mocha; npm run-script test-angular-travis",
+    "test-travis": "npm run-script test-mocha; npm run-script test-angular-travis",
     "test-angular-travis": "PHANTOMJS_BIN=./node_modules/phantomjs/lib/phantom/bin/phantomjs ./node_modules/.bin/testacular start ./test/angular/config/testacular-e2e.conf.js --browsers=PhantomJS",
-    "test-angular":"./node_modules/.bin/testacular start ./test/angular/config/testacular-e2e.conf.js",
+    "test-angular": "./node_modules/.bin/testacular start ./test/angular/config/testacular-e2e.conf.js",
     "test-mocha": "NODE_ENV=test ./node_modules/.bin/mocha ./test/node"
   },
-  "name":"raffleapp-server",
-  "version": "0.0.1",
+  "name": "raffleapp-server",
+  "version": "0.0.1-10",
   "engines": {
     "node": "0.8.x"
   },
@@ -24,5 +24,6 @@
     "should": "1.2.x",
     "testacular": "0.4.x",
     "phantomjs": "0.2.x"
-  }
+  },
+  "subdomain": "raffleapp.gdgsacramento"
 }

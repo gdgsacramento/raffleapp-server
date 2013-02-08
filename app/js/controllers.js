@@ -115,12 +115,17 @@ function UserController($scope, restService) {
     }
 }
 
-function LandingController($scope, restService) {
+function LandingController($scope, $location, restService) {
+
+    restService.getOAuthClientId(function(data) {
+        $scope.clientId = data.client_id;
+    });
+
+    $scope.serverUrl = $location.absUrl().split('landing')[0];
 
 }
 
-
-LandingController.$inject = ['$scope', 'restService'];
+LandingController.$inject = ['$scope', '$location', 'restService'];
 RaffleController.$inject = ['$scope', 'restService'];
 UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];

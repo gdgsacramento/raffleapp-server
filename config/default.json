@@ -8,6 +8,8 @@
 		"HOSTNAME":"localhost"
 	},
     "AUTH": {
-        "ENABLED":true
+        "ENABLED":true,
+        "CLIENT_ID":"574148431532.apps.googleusercontent.com",
+        "CLIENT_SECRET":"Wk7NMBnCnoxcb6gZw0WbAIpH"
     }
 }

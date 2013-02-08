@@ -42,7 +42,7 @@ describe('Test user functions', function() {
     });
 
     it('should return error for old token', function(done) {
-        user.googleAuth('4/D5q3D5vGNGsz-Gp_Z4S559zdjk9L.ovcpsamrlr0ZuJJVnL49Cc9ej6rneAI', function(err, access_code) {
+        user.googleAuth('4/D5q3D5vGNGsz-Gp_Z4S559zdjk9L.ovcpsamrlr0ZuJJVnL49Cc9ej6rneAI','localhost:8080/login.html', function(err, access_code) {
             should.exist(err);
             should.not.exist(access_code);
             done();

@@ -6,6 +6,7 @@ var www = require('./lib/www');
 var mongo = require('./lib/mongo');
 var SERVER = require('config').SERVER;
 var AUTH = require('config').AUTH;
+require('./config/config-override').init();
 
 
 var server = restify.createServer({
@@ -20,8 +21,10 @@ server.use(restify.jsonBodyParser({ mapParams: false }));
 
 server.use(function authenticate(req, res, next) {
 
-    if(req.url.indexOf('/api/') === 0 && req.url.indexOf('/api/v1/auth') !== 0 && AUTH.ENABLED) {
-        console.log(req.url);
+    if(req.url.indexOf('/api/') === 0 &&
+        req.url.indexOf('/api/v1/auth') !== 0 &&
+        req.url.indexOf('/api/vi/auth_client_id') !== 0 &&
+        AUTH.ENABLED) {
         var username = null;
         var password = null;
         if(typeof req.authorization !== 'undefined' && typeof req.authorization.basic !== 'undefined') {
@@ -30,17 +33,16 @@ server.use(function authenticate(req, res, next) {
         }
         user.findAccessToken(mongo.objectID(username), password, function(err, token) {
             if(token !== null && token.token === req.authorization.basic.password) {
-                console.log("authorization success");
+                console.log(req.url+" authorization success");
                 return next();
             } else {
-                console.log("authorization failed");
+                console.log(req.url+" authorization failed");
                 return next(new restify.NotAuthorizedError('User is not authorized'));
             }
         });
     } else {
         return next();
     }
-
 
 });
 
@@ -83,6 +85,15 @@ server.get('/api/v1/winner/:id', api.getWinnerV1);
  * TEST: curl -i -X GET localhost:8080/api/v1/raffle
  */
 server.get('/api/v1/raffle', api.getRaffleV1);
+
+
+/**
+ * Returns the CLIENT_ID for google oauth.  This is needed to make it configurable.
+ */
+server.get('/api/v1/auth_client_id', function(req, res, next) {
+    res.send(200, {client_id:AUTH.CLIENT_ID});
+    return next();
+});
 
 /**
  * Get the user information.
@@ -133,8 +144,6 @@ server.get('\/.*', www.serveV1);
 
 exports.start = function(readyCallback) {
     mongo.init(function() {
-
-        console.log("INFO: MongoDB is ready");
 
         /*
          * Starting the server

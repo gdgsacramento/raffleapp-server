@@ -56,6 +56,12 @@ raServices.factory('restService', ['$http', '$location', function(http, location
                 })
                 .error(redirectOnAuthFailed);
         },
+        getOAuthClientId:function(onSuccess) {
+            http.get('/api/v1/auth_client_id')
+                .success(function(data) {
+                    onSuccess(data);
+                });
+        },
         signOutUser:function() {
             http.post('/api/v1/signout')
                 .success(function() {

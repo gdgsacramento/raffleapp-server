@@ -1,14 +1,11 @@
 {
 	"MONGO": {
-		"URL_CONNECTION":"mongodb://nodejitsu:f75bef7fec5ff28da77974793d7b29a6@linus.mongohq.com:10070/nodejitsudb126882577"
-	},
-	"SERVER": {
-        "URL":"http://gdgsacramento.raffleapp-server.jit.su:8080",
-        "PORT":8080,
-        "HOSTNAME":"gdgsacramento.raffleapp-server.jit.su"
+		"URL_CONNECTION":"use MONGO_URL_CONNECTION env variable"
 	},
     "AUTH": {
-        "ENABLED":false
+        "ENABLED":true,
+        "CLIENT_ID":"use AUTH_CLIENT_ID env variable",
+        "CLIENT_SECRET":"use AUTH_CLIENT_SECRET env variable"
     }
 }
 
