@@ -2,7 +2,7 @@
 
 var raServices = angular.module('ra.services', []);
 
-raServices.factory('restService', ['$http', '$window', function(http, angularWindow) {
+raServices.factory('restService', ['$http', '$location', function(http, location) {
 
     /*
     Always pass authentication headers.
@@ -10,7 +10,7 @@ raServices.factory('restService', ['$http', '$window', function(http, angularWin
     http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode( localStorage.id + ':' + localStorage.token);
 
     var redirectOnAuthFailed = function() {
-       angularWindow.location = '/landing.html';
+        location.path("/landing");
     };
 
     /*
@@ -59,7 +59,7 @@ raServices.factory('restService', ['$http', '$window', function(http, angularWin
         signOutUser:function() {
             http.post('/api/v1/signout')
                 .success(function() {
-                    angularWindow.location = '/landing.html';
+                    location.path("/landing");
                 });
         }
     };

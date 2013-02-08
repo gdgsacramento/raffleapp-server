@@ -10,6 +10,6 @@ function LoginCtrl($scope, $http, $location, $window) {
         console.log(data);
         localStorage.id=data.id;
         localStorage.token=data.token;
-        $window.location='index.html';
+        $window.location='/#/raffle';
     });
 }

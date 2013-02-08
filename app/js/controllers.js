@@ -115,6 +115,12 @@ function UserController($scope, restService) {
     }
 }
 
+function LandingController($scope, restService) {
+
+}
+
+
+LandingController.$inject = ['$scope', 'restService'];
 RaffleController.$inject = ['$scope', 'restService'];
 UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];
