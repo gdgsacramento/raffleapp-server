@@ -1,4 +1,4 @@
-[![Nodejitsu Deploy Status Badges](https://webhooks.nodejitsu.com/gdgsacramento/handbook.png)](https://webops.nodejitsu.com#gdgsacramento/webhooks)
+
 [![Build Status](https://travis-ci.org/gdgsacramento/raffleapp-server.png)](https://travis-ci.org/gdgsacramento/raffleapp-server)
 
 #raffleapp-server
