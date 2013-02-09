@@ -36,7 +36,7 @@ describe('Test user functions', function() {
             user.findUser({id:23}, function(err, newUser) {
                 should.not.exist(err);
                 should.exist(newUser);
-                done();
+                //done();
             });
         });
     });
