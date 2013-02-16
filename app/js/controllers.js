@@ -99,6 +99,14 @@ function RaffleController($scope, restService) {
             $scope.ticket.user_name = "";
         });
     }
+
+    /*
+     * TODO: Experimental : Move add ticket form into raffle
+     */
+    $scope.createTicket2 = function(name, id, index) {
+
+        $scope.raffles[index].tickets.push(name);
+    }
 }
 
 function UserController($scope, restService) {

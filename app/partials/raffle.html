@@ -27,6 +27,7 @@
         </div>
     </div>
 </div>
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span4">
@@ -45,8 +46,20 @@
         </div><!--/span-->
         <div class="span5 raffles">
             <div class="well" ng-class="raffle.isSelectedClass"  ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id, $index)">
-                Raffle: {{raffle.name}}<button class="btn btn-mini" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
+                Raffle: {{raffle.name}}<button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
                 Tickets: {{raffle.tickets}}
+                <!-- Add Bootstrap Badge showing tickets counter
+                <br/>
+                <span class="badge badge-info">{{raffle.tickets.length}}</span>
+                -->
+                <!-- Move add ticket form into raffle
+                <br/>
+                {{raffle._id}}
+                <form class="form-inline">
+                    <input type="text" ng-model="userName" placeholder="Enter ticket">
+                    <button class="btn" ng-click="createTicket2(userName, raffle._id, $index); userName=''">Add Ticket</button>
+                </form>
+                -->
             </div>
         </div> <!--/span-->
     </div><!--/row-->
@@ -54,6 +67,6 @@
     <hr>
 
     <footer>
-        <p>&copy; GDG Sacramento 2012</p>
+        <p>&copy; GDG Sacramento 2013</p>
     </footer>
 </div><!--/.fluid-container-->

@@ -1,10 +1,13 @@
 {
 	"MONGO": {
-		"URL_CONNECTION":"mongodb://localhost/raffleapp"
+		"URL_CONNECTION": "mongodb://localhost/raffleapp"
 	},
 	"SERVER": {
-		"URL":"http://localhost:8080",
-		"PORT":8080,
-		"HOSTNAME":"localhost"
+		"URL": "http://localhost:8080",
+		"PORT": 8080,
+		"HOSTNAME": "localhost"
+	},
+	"AUTH": {
+		"ENABLED": true
 	}
 }

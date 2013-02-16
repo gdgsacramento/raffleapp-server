@@ -19,31 +19,43 @@ server.use(restify.authorizationParser());
 server.use(restify.queryParser({ mapParams: false }));
 server.use(restify.jsonBodyParser({ mapParams: false }));
 
+/*
+ * On each REST API access, we validate user authorization
+ */
 server.use(function authenticate(req, res, next) {
 
     if(req.url.indexOf('/api/') === 0 &&
         req.url.indexOf('/api/v1/auth') !== 0 &&
         req.url.indexOf('/api/vi/auth_client_id') !== 0 &&
         AUTH.ENABLED) {
-        var username = null;
-        var password = null;
-        if(typeof req.authorization !== 'undefined' && typeof req.authorization.basic !== 'undefined') {
-            username = req.username;
-            password = req.authorization.basic.password;
+
+
+        if(!req.authorization || !req.authorization.basic || !req.authorization.basic.username || !req.authorization.basic.password) {
+
+            console.log("WARN: Missing authorization information");
+            res.send(403);
+            return;
         }
+
+        var username = req.authorization.basic.username;
+        var password = req.authorization.basic.password;
+
         user.findAccessToken(mongo.objectID(username), password, function(err, token) {
+
             if(token !== null && token.token === req.authorization.basic.password) {
-                console.log(req.url+" authorization success");
+
                 return next();
-            } else {
-                console.log(req.url+" authorization failed");
+            }
+            else {
+
                 return next(new restify.NotAuthorizedError('User is not authorized'));
             }
         });
-    } else {
+    }
+    else {
+
         return next();
     }
-
 });
 
 /*
@@ -139,7 +151,7 @@ server.post('/api/v1/auth', user.googleOAuth2);
 
 /*
  * Serve static content
- */ 
+ */
 server.get('\/.*', www.serveV1);
 
 exports.start = function(readyCallback) {
