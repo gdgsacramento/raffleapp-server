@@ -37,29 +37,40 @@
                         <input type="text"  ng-model="raffle.raffle_name" placeholder="Enter raffle name">
                         <button id="create_button" class="btn" ng-click="createRaffle()">Create</button>
                     </form>
-                    <form class="form-inline">
-                        <input type="text" ng-model="ticket.user_name" placeholder="Enter ticket">
-                        <button class="btn" ng-click="createTicket()">New Ticket</button>
-                    </form>
                 </ul>
             </div><!--/.well -->
         </div><!--/span-->
         <div class="span5 raffles">
             <div class="well" ng-class="raffle.isSelectedClass"  ng-repeat="raffle in raffles" ng-click="selectRaffle(raffle._id, $index)">
-                Raffle: {{raffle.name}}<button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
-                Tickets: {{raffle.tickets}}
-                <!-- Add Bootstrap Badge showing tickets counter
-                <br/>
-                <span class="badge badge-info">{{raffle.tickets.length}}</span>
-                -->
-                <!-- Move add ticket form into raffle
-                <br/>
-                {{raffle._id}}
-                <form class="form-inline">
-                    <input type="text" ng-model="userName" placeholder="Enter ticket">
-                    <button class="btn" ng-click="createTicket2(userName, raffle._id, $index); userName=''">Add Ticket</button>
-                </form>
-                -->
+                <div class="row">
+                    <div class="span7 offset1">
+                        Raffle: {{raffle.name}} {{raffle._id}}
+                    </div>
+                    <div class="span2 offset2">
+                        <button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset1 span2">
+                        Tickets:
+                    </div>
+                    <div class="span1">
+                        <span class="badge badge-info">{{raffle.tickets.length}}</span>
+                    </div>
+                </div>
+                <div class="tickets">
+                    <div class="ticket" ng-repeat="ticket in raffle.tickets">
+                        <span class="label">{{ticket}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="span4 offset1">
+                        <input class="input-small" type="text" ng-model="userName" placeholder="Ticket Name">
+                    </div>
+                    <div class="span1">
+                        <button class="btn btn-small" ng-click="createTicket(userName, raffle._id, $index); userName=''">Add</button>
+                    </div>
+                </div>
             </div>
         </div> <!--/span-->
     </div><!--/row-->

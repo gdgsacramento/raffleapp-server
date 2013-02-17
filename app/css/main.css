@@ -12,10 +12,6 @@ body {
 	background-color: #cde6ff;
 }
 
-.btn-close {
-    float:right;
-}
-
 .raffles div.select-raffle {
     background-color: #ffcdcd;
 }
@@ -49,4 +45,15 @@ body {
 }
 .marketing p + h4 {
     margin-top: 28px;
+}
+
+.tickets {
+    display: inline-block;
+    padding-left: 12px;
+    padding-bottom: 10px;
+}
+
+.ticket {
+    float:left;
+    padding-right: 5px;
 }

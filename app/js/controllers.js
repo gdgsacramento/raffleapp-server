@@ -7,7 +7,7 @@ function RaffleController($scope, restService) {
 
     var selectedRaffleIndex;
 
-    $scope.ticket = { raffle_id: "", user_name : ""};
+    //$scope.ticket = { raffle_id: "", user_name : ""};
 
     restService.getRaffle(function(data) {
 
@@ -73,39 +73,18 @@ function RaffleController($scope, restService) {
         });
     }
 
-    $scope.createTicket = function() {
+    $scope.createTicket = function(name, id, index) {
 
+        var ticket = {
+            'raffle_id' : id,
+            'user_name' : name
+        };
 
-        /*
-         * Check for missing ticket name
-         */
-        if(!$scope.ticket.user_name || $scope.ticket.user_name === "") {
+        restService.postTicket(ticket, function(data) {
 
-            // TODO: Show message
-            return;
-        }
-
-        /*
-         * If the user didn't select a raffle, we don't do anything
-         */
-        if(selectedRaffleIndex === undefined) {
-            // TODO: Show message
-            return;
-        }
-
-        restService.postTicket($scope.ticket, function(data) {
-
-            $scope.raffles[selectedRaffleIndex].tickets.push($scope.ticket.user_name);
-            $scope.ticket.user_name = "";
+            $scope.raffles[index].tickets.push(name);
+            $scope.userName = "";
         });
-    }
-
-    /*
-     * TODO: Experimental : Move add ticket form into raffle
-     */
-    $scope.createTicket2 = function(name, id, index) {
-
-        $scope.raffles[index].tickets.push(name);
     }
 }
 

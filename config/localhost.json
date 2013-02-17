@@ -8,6 +8,6 @@
 		"HOSTNAME": "localhost"
 	},
 	"AUTH": {
-		"ENABLED": true
+		"ENABLED": false
 	}
 }
