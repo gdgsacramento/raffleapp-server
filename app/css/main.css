@@ -8,13 +8,6 @@ body {
     padding: 9px 0;
 }
 
-.raffles div {
-	background-color: #cde6ff;
-}
-
-.raffles div.select-raffle {
-    background-color: #ffcdcd;
-}
 
 /* Custom container */
 .container-narrow {
@@ -47,6 +40,25 @@ body {
     margin-top: 28px;
 }
 
+.raffle {
+    margin: 5px;
+    padding: 10px;
+    background-color: #cde6ff;
+}
+
+.raffle-block {
+    padding: 10px 0px 0px 10px;
+}
+
+.raffle-left {
+    display: inline-block;
+}
+
+.raffle-right {
+    display: inline-block;
+    float: right;
+}
+
 .tickets {
     display: inline-block;
     padding-left: 12px;
@@ -54,6 +66,13 @@ body {
 }
 
 .ticket {
-    float:left;
-    padding-right: 5px;
+    margin-right: 5px;
+}
+
+.raffle-name {
+    font-weight: bold;
+}
+
+.raffle-input {
+    margin-top: 10px;
 }
