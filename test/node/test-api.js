@@ -55,12 +55,9 @@ describe('Test raffle CRUD', function() {
         };
 
         request.post(options, function(err, res, body) {
-
             res.should.have.status(200);
 
-            body.should.have.lengthOf(1);
-
-            var raffle = body[0];
+            var raffle = body;
             raffleId = raffle._id;
             raffle.should.have.property('name', options.body.raffle_name);
             raffle.should.have.property('_id');

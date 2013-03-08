@@ -2,6 +2,32 @@
 
 var raServices = angular.module('ra.services', []);
 
+raServices.factory('socket', ['$rootScope',function (rootScope) {
+    var socket = io.connect();
+    return {
+        on: function (eventName, callback) {
+            socket.on(eventName, function () {
+                console.log("client received socket.io "+eventName, arguments[0]);
+                var args = arguments;
+                rootScope.$apply(function () {
+                    callback.apply(socket, args);
+                });
+            });
+        },
+        emit: function (eventName, data, callback) {
+            console.log("client sending socket.io "+ eventName+" data is ",data);
+            socket.emit(eventName, data, function () {
+                var args = arguments;
+                rootScope.$apply(function () {
+                    if (callback) {
+                        callback.apply(socket, args);
+                    }
+                });
+            })
+        }
+    };
+}]);
+
 raServices.factory('restService', ['$http', '$location', function(http, location) {
 
     /*

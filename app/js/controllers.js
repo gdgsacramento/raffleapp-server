@@ -3,75 +3,37 @@
 /*
  * Raffle App Controller
  */
-function RaffleController($scope, restService) {
+function RaffleController($scope, socket) {
 
-    var selectedRaffleIndex;
+    socket.emit("getRaffles");
 
-    //$scope.ticket = { raffle_id: "", user_name : ""};
-
-    restService.getRaffle(function(data) {
-
-        $scope.raffles = data;
+    socket.on("raffleList", function(raffles) {
+        $scope.raffles = raffles;
     });
 
-    $scope.selectRaffle = function(raffleId, raffleIndex) {
-
-        $scope.ticket.raffle_id = raffleId;
-
-        /*
-         * Reset selected raffle background color
-         */
-        if(selectedRaffleIndex !== undefined) {
-
-            $scope.raffles[selectedRaffleIndex].isSelectedClass = "";
-        }
-
-        /*
-         * Change selected raffle's background color
-         */
-        if(raffleIndex === selectedRaffleIndex) {
-
-            $scope.raffles[raffleIndex].isSelectedClass = "";
-            selectedRaffleIndex = undefined;
-        }
-        else {
-
-            $scope.raffles[raffleIndex].isSelectedClass = "select-raffle";
-            selectedRaffleIndex = raffleIndex;
-        }
-    };
 
     $scope.createRaffle = function() {
-
         if(!$scope.raffle || !$scope.raffle.raffle_name || $scope.raffle.raffle_name === "") {
-
             // TODO: show message
             return;
         }
-
-        restService.postRaffle($scope.raffle, function(data) {
-
-            $scope.raffles.push(data[0]);
-            $scope.raffle = { raffle_name : ""};
-        });
+        socket.emit("createRaffle", $scope.raffle);
     }
+
+    socket.on("raffleCreated", function(raffle) {
+        $scope.raffles.push(raffle);
+        $scope.raffle = { raffle_name : ""};
+    });
 
     $scope.deleteRaffle = function(raffle) {
-
-        restService.deleteRaffle(raffle, function(data) {
-
-            /*
-             * Reset selected raffle background color
-             */
-            if(selectedRaffleIndex || 0 === selectedRaffleIndex) {
-
-                $scope.raffles[selectedRaffleIndex].isSelectedClass = "";
-                selectedRaffleIndex = undefined;
-            }
-
-            $scope.raffles.splice($scope.raffles.indexOf(raffle), 1); //indexOf not supported on IE
-        });
+        socket.emit("deleteRaffle", raffle);
     }
+
+    socket.on("raffleDeleted", function(raffle) {
+        raffle = $scope.findRaffleById(raffle._id);
+        $scope.raffles.splice($scope.raffles.indexOf(raffle), 1); //indexOf not supported on IE
+    });
+
 
     $scope.createTicket = function(name, id, index) {
 
@@ -80,12 +42,25 @@ function RaffleController($scope, restService) {
             'user_name' : name
         };
 
-        restService.postTicket(ticket, function(data) {
-
-            $scope.raffles[index].tickets.push(name);
-            $scope.userName = "";
-        });
+        socket.emit("createTicket", ticket);
     }
+
+    socket.on("ticketCreated", function(ticket) {
+        var raffle = $scope.findRaffleById(ticket.raffle_id);
+        raffle.tickets.push(ticket.user_name);
+        $scope.userName = "";
+    });
+
+    $scope.findRaffleById = function(raffleId) {
+        for(var i=0; i<$scope.raffles.length; i++) {
+            var raffle = $scope.raffles[i];
+            if(raffle._id === raffleId) {
+                return raffle;
+            }
+        }
+        return null;
+    }
+
 }
 
 function UserController($scope, restService) {
@@ -113,6 +88,6 @@ function LandingController($scope, $location, restService) {
 }
 
 LandingController.$inject = ['$scope', '$location', 'restService'];
-RaffleController.$inject = ['$scope', 'restService'];
+RaffleController.$inject = ['$scope', 'socket'];
 UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];
