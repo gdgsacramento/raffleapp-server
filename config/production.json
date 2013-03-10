@@ -3,7 +3,7 @@
 		"URL_CONNECTION":"use MONGO_URL_CONNECTION env variable"
 	},
     "AUTH": {
-        "ENABLED":true,
+        "ENABLED":false,
         "CLIENT_ID":"use AUTH_CLIENT_ID env variable",
         "CLIENT_SECRET":"use AUTH_CLIENT_SECRET env variable"
     }
