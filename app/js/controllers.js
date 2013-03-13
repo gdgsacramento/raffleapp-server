@@ -61,6 +61,20 @@ function RaffleController($scope, socket) {
         return null;
     }
 
+    $scope.drawWinners = function(raffle) {
+
+        socket.emit("drawWinners", {'id':raffle._id}, function(err, data) {
+
+            if(err) {
+
+                console.error("ERRRO: Was not able to draw winners");
+            }
+            else {
+
+                raffle.winners = data;
+            }
+        });
+    };
 }
 
 function UserController($scope, restService) {

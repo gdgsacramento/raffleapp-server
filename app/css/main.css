@@ -76,3 +76,7 @@ body {
 .raffle-input {
     margin-top: 10px;
 }
+
+.raffle-winner {
+    display: block;
+}

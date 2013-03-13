@@ -74,6 +74,14 @@
                             <button class="btn btn-small" ng-click="createTicket(userName, raffle._id, $index); userName=''">Add</button>
                         </div>
                     </div>
+                    <div class="raffle-block">
+                        <button class="btn btn-small" ng-click="drawWinners(raffle)">Draw Winners</button>
+                    </div>
+                    <div class="raffle-block">
+                        <div class="raffle-winner" ng-repeat="winner in raffle.winners">
+                            {{$index + 1}}: <span class="label label-warning">{{winner}}</span>
+                        </div>
+                    </div>
 
                 </div>
             </div>
