@@ -4,3 +4,14 @@
 4. Meetup's API for raffle events
 
 5. Develop a native android app to use Nearby API
+
+
+
+
+raffle:
+{
+    name: String,
+    participants: [String],
+    date: Date,
+    status: String <active, finished>
+}
