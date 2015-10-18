@@ -72,27 +72,33 @@ function RaffleController($scope) {
         return null;
     }
 
+    function raffleHasParticipant(raffle, name) {
+        var foundName = false;
+        raffle.participants.forEach(function (existingName) {
+            if (existingName.toLowerCase() === name.toLowerCase()) {
+                foundName = true;
+                return;
+            }
+        });
+        return foundName;
+    }
+
     $scope.createTicket = function (name, id) {
-
-        var participant = {
-            'raffle_id': id,
-            'user_name': name
-        };
-
-
         var raffle = getRaffle(id);
         if (!raffle.participants) {
             raffle.participants = [];
         }
-        raffle.participants.push(name);
-        var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + id + '/participants');
-        firebaseRaffle.update(raffle.participants, function (error) {
-            if (error) {
-                console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
-            }
-        });
+        if (!raffleHasParticipant(raffle, name)) {
+            raffle.participants.push(name);
+            var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + id + '/participants');
+            firebaseRaffle.update(raffle.participants, function (error) {
+                if (error) {
+                    console.log('Synchronization failed');
+                } else {
+                    $scope.$apply();
+                }
+            });
+        }
     };
 
     $scope.createRaffle = function () {
