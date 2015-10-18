@@ -12,6 +12,7 @@ raffle:
 {
     name: String,
     participants: [String],
+    winners: [String],
     date: Date,
     status: String <active, finished>
 }

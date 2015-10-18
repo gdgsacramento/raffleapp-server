@@ -2,7 +2,7 @@
 
 var raServices = angular.module('ra.services', []);
 
-raServices.factory('socket', ['$rootScope',function (rootScope) {
+/*raServices.factory('socket', ['$rootScope',function (rootScope) {
     var socket = io.connect();
     return {
         on: function (eventName, callback) {
@@ -26,7 +26,7 @@ raServices.factory('socket', ['$rootScope',function (rootScope) {
             })
         }
     };
-}]);
+}]);*/
 
 raServices.factory('restService', ['$http', '$location', function(http, location) {
 

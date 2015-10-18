@@ -34,7 +34,7 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <form class="form-inline">
-                        <input type="text"  ng-model="raffle.raffle_name" placeholder="Enter raffle name">
+                        <input type="text"  ng-model="raffle.name" placeholder="Enter raffle name">
                         <button id="create_button" class="btn" ng-click="createRaffle()">Create</button>
                     </form>
                 </ul>
@@ -58,12 +58,12 @@
                             Tickets:
                         </div>
                         <div class="raffle-left">
-                            <span class="badge badge-info">{{raffle.tickets.length}}</span>
+                            <span class="badge badge-info">{{raffle.participants.length}}</span>
                         </div>
                     </div>
                     <div class="raffle-block">
-                        <div class="raffle-left" ng-repeat="ticket in raffle.tickets">
-                            <span class="label ticket">{{ticket}}</span>
+                        <div class="raffle-left" ng-repeat="participant in raffle.participants">
+                            <span class="label ticket">{{participant}}</span>
                         </div>
                     </div>
                     <div class="raffle-block">
