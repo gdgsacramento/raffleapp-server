@@ -21,6 +21,10 @@
     "socket.io":"0.9.x"
   },
   "devDependencies": {
+    "angular-animate": "^1.4.5",
+    "angular-aria": "^1.4.5",
+    "angular-material": "^0.10.1",
+    "angular-route": "^1.4.5",
     "mocha": "1.7.x",
     "should": "1.2.x",
     "testacular": "0.4.x",

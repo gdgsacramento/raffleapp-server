@@ -1,96 +1,56 @@
+<div>
+<md-toolbar layout="row">
+  <div class="md-toolbar-tools md-default-theme">
+    <h1>Raffle Application</h1>
+  </div>
+</md-toolbar>
 
-<div class="navbar navbar-inverse navbar-fixed-top" ng-cloak>
-    <div class="navbar-inner">
-        <div class="container-fluid">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="#">Raffle Application</a>
-            <div class="nav-collapse collapse">
-                <ul class="nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="/about">About</a></li>
-                    <li><a href="/contact">Contact</a></li>
-                </ul>
-                <ul class="nav pull-right" ng-controller="UserController">
-                    <div ng-show="user.picture" class="brand"><img ng-src="{{user.picture}}?size=25" class="img-rounded"/></div>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}}<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a ng-click="signOutUser()">Sign out</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!--/.nav-collapse -->
+<div>
+  <md-content flex class="md-padding" layout="column">
+    <!--<button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>-->
+    <md-card>
+      <md-card-content layout-gt-sm="row" layout-sm="column" layout-align="center center">
+        <h1 class="md-title">Create new Raffle</h1>
+        <section class="md-padding">
+        <md-input-container>
+          <label>Raffle Name</label>
+          <input ng-model="raffle.name" type="text">
+        </md-input-container>
+      </section>
+        <md-button class="md-raised" ng-click="createRaffle()">Create</md-button>
+      </md-card-content>
+    </md-card>
+    <md-card ng-repeat="raffle in raffles">
+      <md-card-content layout="column">
+        <h1 class="md-display-1">{{raffle.name}}</h1>
+        <div layout-gt-sm="row" layout-sm="column" layout-align-sm="center center">
+          <md-input-container>
+            <label>Your Name</label>
+            <input ng-model="userName" type="text">
+          </md-input-container>
+          <section>
+          <md-button class="md-raised md-primary" ng-click="createTicket(userName, raffle._id, $index); userName=''">Enter</md-button>
+        </section>
         </div>
-    </div>
+        <md-chips ng-model="raffle.participants" ></md-chips>
+      </md-card-content>
+      <section flex class="md-padding" layout="row" layout-align="end center">
+        {{raffle.participants.length}} Entries
+        <md-button class="md-raised md-warn" ng-click="drawWinners(raffle)">Draw Winners</md-button>
+      </section>
+      <section flex class="md-padding" layout="column" ng-show="raffle.winners">
+        <md-divider></md-divider>
+        <h3>Winners</h3>
+        <ol>
+          <li ng-repeat="winner in raffle.winners" class="md-subhead">{{winner}}</li>
+        </ol>
+      </section>
+    </md-card>
+    <md-card>
+      <md-card-content>
+          <p>&copy; GDG Sacramento 2013-2015</p>
+      </md-card-content>
+    </md-card>
+  </md-content>
 </div>
-
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="span4">
-            <div class="well sidebar-nav">
-                <ul class="nav nav-list">
-                    <form class="form-inline">
-                        <input type="text"  ng-model="raffle.name" placeholder="Enter raffle name">
-                        <button id="create_button" class="btn" ng-click="createRaffle()">Create</button>
-                    </form>
-                </ul>
-            </div><!--/.well -->
-        </div><!--/span-->
-        <div class="span5">
-            <div ng-class="raffle.isSelectedClass"  ng-repeat="raffle in raffles">
-
-                <div class="raffle well">
-
-                    <div class="raffle-block">
-                        <div class="raffle-left">
-                            Raffle: <span class="raffle-name">{{raffle.name}}<span>
-                        </div>
-                        <div class="raffle-right">
-                            <button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
-                        </div>
-                    </div>
-                    <div class="raffle-block">
-                        <div class="raffle-left">
-                            Tickets:
-                        </div>
-                        <div class="raffle-left">
-                            <span class="badge badge-info">{{raffle.participants.length}}</span>
-                        </div>
-                    </div>
-                    <div class="raffle-block">
-                        <div class="raffle-left" ng-repeat="participant in raffle.participants">
-                            <span class="label ticket">{{participant}}</span>
-                        </div>
-                    </div>
-                    <div class="raffle-block">
-                        <div class="raffle-left">
-                            <input class="input-small raffle-input" type="text" ng-model="userName" placeholder="Ticket Name">
-                        </div>
-                        <div class="raffle-left">
-                            <button class="btn btn-small" ng-click="createTicket(userName, raffle._id, $index); userName=''">Add</button>
-                        </div>
-                    </div>
-                    <div class="raffle-block">
-                        <button class="btn btn-small" ng-click="drawWinners(raffle)">Draw Winners</button>
-                    </div>
-                    <div class="raffle-block">
-                        <div class="raffle-winner" ng-repeat="winner in raffle.winners">
-                            {{$index + 1}}: <span class="label label-warning">{{winner}}</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div> <!--/span-->
-    </div><!--/row-->
-
-    <hr>
-
-    <footer>
-        <p>&copy; GDG Sacramento 2013-2015</p>
-    </footer>
-</div><!--/.fluid-container-->
+</div>
