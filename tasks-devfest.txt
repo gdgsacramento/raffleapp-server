@@ -1,8 +1,8 @@
 1. Provision a beacon
 2. Use Firebase to store/retrieve raffles
 3. Rewrite UI in Material
-4. Meetup's API for raffle events
 
+4. Meetup's API for raffle events
 5. Develop a native android app to use Nearby API
 
 

@@ -19,6 +19,13 @@ function RaffleController($scope) {
         }
     });
 
+    firebase.on('child_changed', function (childSnapshot, prevChildKey) {
+        console.log('child changed');
+        console.log('childsnapshot', childSnapshot.val());
+        console.log('prevChildKey', prevChildKey);
+        getRaffleAndUpdateParticipants(childSnapshot.val());
+    });
+
     function removeRaffle(raffles) {
         console.log('Removing raffles based on cloud array:', raffles);
         var raffleToRemove = null;
@@ -61,6 +68,16 @@ function RaffleController($scope) {
             }
         }
         return false;
+    }
+
+    function getRaffleAndUpdateParticipants(raffle) {
+        $scope.raffles.forEach(function (existingRaffle) {
+            if (raffle.name === existingRaffle.name) {
+                existingRaffle.participants = raffle.participants;
+                $scope.$apply();
+                return;
+            }
+        });
     }
 
     function getRaffle(id) {
