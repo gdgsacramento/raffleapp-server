@@ -17,3 +17,20 @@ angular/node/mongo stack.  It is used to determine best practices for developing
   * Run `npm install` if you have not already.
   * Run `npm run-script start-test` to run the node test server.
   * Run `npm test`.  This should execute all tests.
+
+##Project Setup for new Firebase driven version (No NodeJS and no Mongo DB).
+  *you just have to change 2 files.
+  * index.html
+  *     replace all
+  *      <link href="/lib/
+  *     with
+  *       <link href="./lib/
+  *     (basically add a dot to each of those)
+  *
+  *     then completely comment out <script src="./socket.io/socket.io.js"></script>
+  * app.js
+  *    change
+  *    'partials/raffle.html
+  *    to
+  *    'raffleapp-server/app/partials/raffle.html
+
