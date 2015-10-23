@@ -103,7 +103,8 @@ function RaffleController($scope) {
             if (error) {
                 console.log('Synchronization failed');
             } else {
-                $scope.$apply();
+                $scope.$apply()
+                $scope.raffle.name = "";
             }
         });
     };

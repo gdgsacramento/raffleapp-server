@@ -32,7 +32,7 @@
           <md-button class="md-raised md-primary" ng-click="createTicket(userName, raffle._id, $index); userName=''">Enter</md-button>
         </section>
         </div>
-        <md-chips ng-model="raffle.participants" ></md-chips>
+        <md-chips ng-model="raffle.participants" readonly="true"></md-chips>
       </md-card-content>
       <section flex class="md-padding" layout="row" layout-align="end center">
         {{raffle.participants.length}} Entries

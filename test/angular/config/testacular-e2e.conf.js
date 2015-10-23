@@ -3,7 +3,7 @@ basePath = '../../../';
 files = [
   ANGULAR_SCENARIO,
   ANGULAR_SCENARIO_ADAPTER,
-  'test/angular/e2e/*.js'
+  'test/angular-old/e2e/*.js'
 ];
 
 autoWatch = false;
