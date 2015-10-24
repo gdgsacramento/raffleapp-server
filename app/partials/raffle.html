@@ -28,8 +28,9 @@
             <label>Your Name</label>
             <input ng-model="userName" type="text">
           </md-input-container>
+          {{nameError}}
           <section>
-          <md-button class="md-raised md-primary" ng-click="createTicket(userName, raffle._id, $index); userName=''">Enter</md-button>
+          <md-button class="md-raised md-primary" ng-click="createTicket(userName, raffle); userName=''">Enter</md-button>
         </section>
         </div>
         <md-chips ng-model="raffle.participants" readonly="true"></md-chips>
@@ -37,6 +38,7 @@
       <section flex class="md-padding" layout="row" layout-align="end center">
         {{raffle.participants.length}} Entries
         <md-button class="md-raised md-warn" ng-click="drawWinners(raffle)">Draw Winners</md-button>
+        <md-button class="md-raised" ng-click="deleteRaffle(raffle)">Delete</md-button>
       </section>
       <section flex class="md-padding" layout="column" ng-show="raffle.winners">
         <md-divider></md-divider>

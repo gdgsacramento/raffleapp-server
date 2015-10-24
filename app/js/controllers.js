@@ -3,121 +3,95 @@
 /*
  * Raffle App Controller
  */
-function RaffleController($scope) {
+function RaffleController($scope, $mdDialog) {
     $scope.raffles = [];
+    var initialCall = true;
 
     var firebase = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles');
 
     firebase.on('value', function (dataSnapshot) {
-        var raffles = dataSnapshot.val();
-        console.log('Raffle object', raffles);
-        console.log('cloud raffle length =', raffles.length);
-        if (Object.keys(raffles).length > $scope.raffles.length) {
-            addRaffle(raffles);
-        } else if (Object.keys(raffles).length < $scope.raffles.length) {
-            removeRaffle(raffles);
+
+        $scope.raffles = dataSnapshot.val();
+        if($scope.raffles === null) {
+            console.log('Resetting raffles');
+            $scope.raffles = [];
+        }
+
+        if(initialCall) {
+            $scope.$apply();
+            initialCall = false;
         }
     });
-
-    function removeRaffle(raffles) {
-        console.log('Removing raffles based on cloud array:', raffles);
-        var raffleToRemove = null;
-        for (var index = 0; index < $scope.raffles.length; index++) {
-            var scopeRaffle = $scope.raffles[index];
-            var raffleFound = false;
-            for (var prop in raffles) {
-                var cloudRaffle = raffles[prop];
-                if (scopeRaffle._id === cloudRaffle._id) {
-                    raffleFound = true;
-                }
-            }
-            if (!raffleFound) {
-                raffleToRemove = index;
-                break;
-            }
-        }
-        if (raffleToRemove !== null) {
-            $scope.raffles.splice(raffleToRemove, 1);
-            $scope.$apply();
-        }
-    }
-
-    function addRaffle(raffles) {
-        console.log('Adding raffles from array:', raffles);
-        for (var prop in raffles) {
-            if (!hasRaffle(prop)) {
-                var newRaffle = raffles[prop];
-                newRaffle._id = prop;
-                $scope.raffles.push(raffles[prop]);
-            }
-        }
-        $scope.$apply();
-    }
-
-    function hasRaffle(id) {
-        for (var i = 0; i < $scope.raffles.length; i++) {
-            if ($scope.raffles[i]._id === id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function getRaffle(id) {
-        for (var i = 0; i < $scope.raffles.length; i++) {
-            if ($scope.raffles[i]._id === id) {
-                return $scope.raffles[i];
-            }
-        }
-        return null;
-    }
-
-    $scope.createTicket = function (name, id) {
-
-        var participant = {
-            'raffle_id': id,
-            'user_name': name
-        };
-
-
-        var raffle = getRaffle(id);
-        if (!raffle.participants) {
-            raffle.participants = [];
-        }
-        raffle.participants.push(name);
-        var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + id + '/participants');
-        firebaseRaffle.update(raffle.participants, function (error) {
-            if (error) {
-                console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
-            }
-        });
-    };
 
     $scope.createRaffle = function () {
         if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
             return;
         }
-        firebase.push($scope.raffle, function () {
+        $scope.raffle.participants = [];
+        firebase.push($scope.raffle, function (error) {
             if (error) {
                 console.log('Synchronization failed');
             } else {
-                $scope.$apply()
-                $scope.raffle.name = "";
+                $scope.raffle.name = '';
+                $scope.$apply();
             }
         });
     };
 
-    $scope.deleteRaffle = function (raffle) {
-        var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + raffle._id);
-        firebaseRaffle.remove(function (error) {
-            if (error) {
-                console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
+    function getKeyByRaffle(raffle) {
+        var key = '';
+        for(var tmpKey in $scope.raffles) {
+            if($scope.raffles[tmpKey] === raffle) {
+                key = tmpKey;
             }
-        });
+        }
+        return key;
+    }
+
+    function showAlert(name) {
+        $mdDialog.show(
+            $mdDialog.alert()
+                .clickOutsideToClose(true)
+                .title('Error creating Ticket')
+                .content("A user named " + name + " has already entered the raffle")
+                .ariaLabel('Error creating Ticket')
+                .ok('Got it!')
+        );
+    }
+
+    $scope.createTicket = function (name, raffle) {
+        if (!raffle.participants) {
+            raffle.participants = [];
+        }
+
+        var nameAlreadyExists = false;
+        for(var i = 0; i < raffle.participants.length; i++) {
+            if(raffle.participants[i] === name) {
+                nameAlreadyExists = true;
+            }
+        }
+
+        if(nameAlreadyExists) {
+            showAlert(name);
+        } else {
+            var key = getKeyByRaffle(raffle);
+
+            raffle.participants.push(name);
+            $scope.raffles[key] = raffle;
+            firebase.update($scope.raffles, function (error) {
+                if (error) {
+                    console.log('Synchronization failed');
+                } else {
+                    $scope.nameError = '';
+                }
+            });
+        }
+    };
+
+    $scope.deleteRaffle = function (raffle) {
+        var key = getKeyByRaffle(raffle);
+
+        firebase.child(key).remove();
     };
 
     $scope.findRaffleById = function (raffleId) {
@@ -134,7 +108,6 @@ function RaffleController($scope) {
         // Randomize tickets fn.fisherYates(tickets);
         raffle.winners = angular.copy(raffle.participants);
         shuffleArray(raffle.winners);
-        $scope.$apply();
     };
 
     /**

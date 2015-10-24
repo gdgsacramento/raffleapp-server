@@ -1,27 +1,30 @@
+var Hapi = require('hapi');
+var server = new Hapi.Server();
+var Inert = require('inert');
 
-var restify = require('restify');
-var www = require('./lib/www');
-//var raffleapprest = require('./lib/raffleapp-rest');
-var SERVER = require('config').SERVER;
-require('./config/config-override').init();
-
-
-var server = restify.createServer({
-    name : "Raffle App Server",
-    version : "0.0.1-a"
+server.connection({
+    host: 'localhost',
+    port: 8080
 });
 
+server.register(Inert, function (err) {
+    if(err) {
+        throw err;
+    }
+});
 
-/*
- * Serve static content
- */
-server.get('\/.*', www.serveV1);
+server.route({
+    method: 'GET',
+    path:'/{param*}',
+    handler: {
+        directory : {
+            path: 'app'
+        }
+    }
+});
 
-/*
- * Starting the server
- */
-server.listen(SERVER.PORT, SERVER.HOSTNAME, function () {
-    console.log('%s listening at %s', server.name, server.url);
+server.start(function() {
+    console.log("Server hath been started");
 });
 
 
