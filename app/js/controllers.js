@@ -89,9 +89,18 @@ function RaffleController($scope, $mdDialog) {
     };
 
     $scope.deleteRaffle = function (raffle) {
-        var key = getKeyByRaffle(raffle);
+        var confirmDialog = $mdDialog.confirm()
+            .title("Delete Raffle?")
+            .content("Are you sure you want to delete " + raffle.name + "?")
+            .ariaLabel("Delete Raffle?")
+            .ok("Delete")
+            .cancel("Cancel");
 
-        firebase.child(key).remove();
+        $mdDialog.show(confirmDialog).then(function() {
+            var key = getKeyByRaffle(raffle);
+
+            firebase.child(key).remove();
+        });
     };
 
     $scope.findRaffleById = function (raffleId) {
