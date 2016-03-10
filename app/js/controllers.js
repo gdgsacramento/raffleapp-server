@@ -31,21 +31,13 @@ function RaffleController($scope) {
         var raffleToRemove = null;
         for (var index = 0; index < $scope.raffles.length; index++) {
             var scopeRaffle = $scope.raffles[index];
-            var raffleFound = false;
-            for (var prop in raffles) {
-                var cloudRaffle = raffles[prop];
-                if (scopeRaffle._id === cloudRaffle._id) {
-                    raffleFound = true;
-                }
-            }
-            if (!raffleFound) {
+            if (!raffles[scopeRaffle._id]) {
                 raffleToRemove = index;
                 break;
             }
         }
         if (raffleToRemove !== null) {
             $scope.raffles.splice(raffleToRemove, 1);
-            $scope.$apply();
         }
     }
 
@@ -74,10 +66,9 @@ function RaffleController($scope) {
         $scope.raffles.forEach(function (existingRaffle) {
             if (raffle.name === existingRaffle.name) {
                 existingRaffle.participants = raffle.participants;
-                $scope.$apply();
-                return;
             }
         });
+        $scope.$apply();
     }
 
     function getRaffle(id) {
@@ -111,22 +102,18 @@ function RaffleController($scope) {
             firebaseRaffle.update(raffle.participants, function (error) {
                 if (error) {
                     console.log('Synchronization failed');
-                } else {
-                    $scope.$apply();
                 }
             });
         }
     };
 
     $scope.createRaffle = function () {
-        if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
+        if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === '') {
             return;
         }
         firebase.push($scope.raffle, function () {
             if (error) {
                 console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
             }
         });
     };
@@ -136,8 +123,6 @@ function RaffleController($scope) {
         firebaseRaffle.remove(function (error) {
             if (error) {
                 console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
             }
         });
     };
@@ -181,7 +166,7 @@ function UserController($scope, restService) {
             $scope.user = data;
         });
     } else {
-        $scope.user = {name: "Test Mode"};
+        $scope.user = {name: 'Test Mode'};
     }
 
     $scope.signOutUser = function () {

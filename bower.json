@@ -1,0 +1,26 @@
+{
+  "name": "raffleapp",
+  "description": "GDG Sacramento raffle app",
+  "main": "app/index.html",
+  "authors": [
+    "Oleg Kalugin <olegspace@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/gdgsacramento/raffleapp-server",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.0.3",
+    "firebase": "2.3.1",
+    "jquery": "^2.2.1",
+    "webtoolkit.base64": "^1.0.2"
+  }
+}
