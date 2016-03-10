@@ -1,7 +1,12 @@
- language: node_js
+language: node_js
 
- node_js:
-   - "5.7"
+node_js:
+  - "5.7"
 
- script:
-   - npm run-script test-angular-travis
+script:
+  - npm install -g firebase-tools
+
+after_success:
+  - firebase deploy --email ${FIREBASE_USERNAME} --password ${FIREBASE_PASSWORD}
+
+sudo: false
