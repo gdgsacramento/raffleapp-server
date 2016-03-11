@@ -19,6 +19,9 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.0.3"
+    "angular": "1.0.3",
+    "firebase": "^2.4.1",
+    "jquery": "1.9.1",
+    "webtoolkit.base64": "^1.0.2"
   }
 }
