@@ -31,21 +31,13 @@ function RaffleController($scope) {
         var raffleToRemove = null;
         for (var index = 0; index < $scope.raffles.length; index++) {
             var scopeRaffle = $scope.raffles[index];
-            var raffleFound = false;
-            for (var prop in raffles) {
-                var cloudRaffle = raffles[prop];
-                if (scopeRaffle._id === cloudRaffle._id) {
-                    raffleFound = true;
-                }
-            }
-            if (!raffleFound) {
+            if (!raffles[scopeRaffle._id]) {
                 raffleToRemove = index;
                 break;
             }
         }
         if (raffleToRemove !== null) {
             $scope.raffles.splice(raffleToRemove, 1);
-            $scope.$apply();
         }
     }
 
