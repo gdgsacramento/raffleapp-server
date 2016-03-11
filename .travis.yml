@@ -1,19 +1,10 @@
- language: node_js
+language: node_js
 
- node_js:
-   - "0.8"
+node_js:
+   - "5.0"
 
- services:
-   - mongodb
+install:
+  - npm install -g firebase-tools
 
- before_script:
-   - npm run-script start-test  > /dev/null &
-   - sleep 1 #give server time to start
-
- script:
-   - npm run-script test-travis
-
- notifications:
-   webhooks:
-     urls:
-       - http://webhooks.nodejitsu.com/1/deploy
+after_success:
+  - firebase deploy --email ${FIREBASE_USERNAME} --password ${FIREBASE_PASSWORD}
