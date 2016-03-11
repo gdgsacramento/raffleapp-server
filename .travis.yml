@@ -8,3 +8,9 @@ install:
 
 after_success:
   - firebase deploy --email ${FIREBASE_USERNAME} --password ${FIREBASE_PASSWORD}
+
+sudo: false
+
+branches:
+  only:
+    - master
