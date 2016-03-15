@@ -1,4 +1,3 @@
-
 <div class="navbar navbar-inverse navbar-fixed-top" ng-cloak>
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -15,9 +14,12 @@
                     <li><a href="/contact">Contact</a></li>
                 </ul>
                 <ul class="nav pull-right" ng-controller="UserController">
-                    <div ng-show="user.picture" class="brand"><img ng-src="{{user.picture}}?size=25" class="img-rounded"/></div>
+                    <li ng-show="user.picture" class="brand">
+                        <img ng-src="{{user.picture}}?size=25" class="img-rounded"/>
+                    </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}}<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}}<b
+                            class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a ng-click="signOutUser()">Sign out</a></li>
                         </ul>
@@ -34,23 +36,25 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <form class="form-inline">
-                        <input type="text"  ng-model="raffle.name" placeholder="Enter raffle name">
+                        <input type="text" ng-model="raffle.name" placeholder="Enter raffle name">
                         <button id="create_button" class="btn" ng-click="createRaffle()">Create</button>
                     </form>
                 </ul>
             </div><!--/.well -->
         </div><!--/span-->
         <div class="span5">
-            <div ng-class="raffle.isSelectedClass"  ng-repeat="raffle in raffles">
+            <div ng-class="raffle.isSelectedClass" ng-repeat="raffle in raffles">
 
                 <div class="raffle well">
 
                     <div class="raffle-block">
                         <div class="raffle-left">
-                            Raffle: <span class="raffle-name">{{raffle.name}}<span>
+                            Raffle: <span class="raffle-name">{{raffle.name}}</span>
                         </div>
                         <div class="raffle-right">
-                            <button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button><br/>
+                            <button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i
+                                class="icon-remove"></i></button>
+                            <br/>
                         </div>
                     </div>
                     <div class="raffle-block">
@@ -68,10 +72,13 @@
                     </div>
                     <div class="raffle-block">
                         <div class="raffle-left">
-                            <input class="input-small raffle-input" type="text" ng-model="userName" placeholder="Ticket Name">
+                            <input class="input-small raffle-input" type="text" ng-model="userName"
+                                   placeholder="Ticket Name">
                         </div>
                         <div class="raffle-left">
-                            <button class="btn btn-small" ng-click="createTicket(userName, raffle._id, $index); userName=''">Add</button>
+                            <button class="btn btn-small"
+                                    ng-click="createTicket(userName, raffle._id, $index); userName=''">Add
+                            </button>
                         </div>
                     </div>
                     <div class="raffle-block">
