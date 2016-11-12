@@ -3,13 +3,20 @@
 /*
  * Raffle App Controller
  */
+
+var fb = firebase.initializeApp({
+    apiKey: 'AIzaSyACzmGxAtEhVTCTLNwFEKtmoGheXc43-k8',
+    authDomain: 'raffle-gdgsac.firebaseio.com',
+    databaseURL: 'https://raffle-gdgsac.firebaseio.com/'
+});
+
 function RaffleController($scope) {
     $scope.raffles = [];
     var firstUpdate = true;
 
-    var firebase = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles');
+    var ref = fb.database().ref('/raffles');
 
-    firebase.on('value', function (dataSnapshot) {
+    ref.on('value', function (dataSnapshot) {
         var raffles = dataSnapshot.val();
         console.log('Raffle object', raffles);
         $scope.raffles = [];
@@ -48,7 +55,7 @@ function RaffleController($scope) {
         }
         if (!raffleHasParticipant(raffle, name)) {
             raffle.participants.push(name);
-            var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + id + '/participants');
+            var firebaseRaffle = fb.database().ref('/raffles/' + id + '/participants');
             firebaseRaffle.set(raffle.participants, function (error) {
                 if (error) {
                     console.log('Synchronization failed');
@@ -61,7 +68,7 @@ function RaffleController($scope) {
         if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
             return;
         }
-        firebase.push($scope.raffle, function (error) {
+        ref.push($scope.raffle, function (error) {
             if (error) {
                 console.log('Synchronization failed');
             }
@@ -69,7 +76,7 @@ function RaffleController($scope) {
     };
 
     $scope.deleteRaffle = function (raffle) {
-        var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + raffle._id);
+        var firebaseRaffle = fb.database().ref('raffles/' + raffle._id);
         firebaseRaffle.remove(function (error) {
             if (error) {
                 console.log('Synchronization failed');
