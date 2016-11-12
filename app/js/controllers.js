@@ -3,12 +3,19 @@
 /*
  * Raffle App Controller
  */
+
+var fb = firebase.initializeApp({
+    apiKey: 'AIzaSyACzmGxAtEhVTCTLNwFEKtmoGheXc43-k8',
+    authDomain: 'raffle-gdgsac.firebaseio.com',
+    databaseURL: 'https://raffle-gdgsac.firebaseio.com/'
+});
+
 function RaffleController($scope) {
     $scope.raffles = [];
 
-    var firebase = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles');
+    var ref = fb.database().ref('/raffles');
 
-    firebase.on('value', function (dataSnapshot) {
+    ref.on('value', function (dataSnapshot) {
         var raffles = dataSnapshot.val();
         console.log('Raffle object', raffles);
         console.log('cloud raffle length =', raffles.length);
@@ -19,7 +26,7 @@ function RaffleController($scope) {
         }
     });
 
-    firebase.on('child_changed', function (childSnapshot, prevChildKey) {
+    ref.on('child_changed', function (childSnapshot, prevChildKey) {
         console.log('child changed');
         console.log('childsnapshot', childSnapshot.val());
         console.log('prevChildKey', prevChildKey);
@@ -90,7 +97,7 @@ function RaffleController($scope) {
         }
         if (!raffleHasParticipant(raffle, name)) {
             console.log('Adding a ticket %s to raffle %s', name, raffle);
-            var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + id + '/participants');
+            var firebaseRaffle = fb.database().ref('/raffles/' + id + '/participants');
             var ticketRef = firebaseRaffle.push();
             ticketRef.set({name: name});
         }
@@ -100,7 +107,7 @@ function RaffleController($scope) {
         if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
             return;
         }
-        firebase.push($scope.raffle, function () {
+        ref.push($scope.raffle, function (error) {
             if (error) {
                 console.log('Synchronization failed');
             } else {
@@ -110,7 +117,7 @@ function RaffleController($scope) {
     };
 
     $scope.deleteRaffle = function (raffle) {
-        var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + raffle._id);
+        var firebaseRaffle = fb.database().ref('raffles/' + raffle._id);
         firebaseRaffle.remove(function (error) {
             if (error) {
                 console.log('Synchronization failed');
