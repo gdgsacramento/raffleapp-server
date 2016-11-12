@@ -1,5 +1,5 @@
 <div class="span6">
-    <div class="panel panel-default raffle">
+    <div class="panel raffle well">
         <div class="panel-heading">
             <h3 class="panel-title">Create a new raffle</h3>
         </div>
@@ -12,13 +12,13 @@
     </div>
 </div><!--/span-->
 <div class="span6">
-    <div class="panel panel-default raffle">
+    <div class="panel raffle well">
         <div class="panel-heading">
             <h3 class="panel-title">Current list of raffles</h3>
         </div>
         <div class="panel-body">
-            <ul class="nav nav-list">
-                <li ng-repeat="raffle in raffles">
+            <ul class="list-group">
+                <li ng-repeat="raffle in raffles" class="list-group-item">
                     {{raffle.name}} <button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button>
                 </li>
 
