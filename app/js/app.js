@@ -9,7 +9,7 @@ var ra = angular.module('ra', ['ra.filters', 'ra.services', 'ra.directives', 'ra
 ra.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/landing', {templateUrl: 'partials/landing.html', controller: LandingController});
     $routeProvider.when('/', {templateUrl: 'partials/raffle.html', controller: RaffleController});
-    $routeProvider.when('/admin', {templateUrl: 'partials/admin.html', controller: AdminController});
+    $routeProvider.when('/admin', {templateUrl: 'partials/admin.html', controller: RaffleController});
     $routeProvider.otherwise({redirectTo: '/'});
 
     $locationProvider.html5Mode(true);

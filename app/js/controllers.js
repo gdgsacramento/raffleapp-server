@@ -104,19 +104,6 @@ function RaffleController($scope) {
         }
     };
 
-    $scope.createRaffle = function () {
-        if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
-            return;
-        }
-        ref.push($scope.raffle, function (error) {
-            if (error) {
-                console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
-            }
-        });
-    };
-
     $scope.deleteRaffle = function (raffle) {
         var firebaseRaffle = fb.database().ref('raffles/' + raffle._id);
         firebaseRaffle.remove(function (error) {
@@ -143,6 +130,19 @@ function RaffleController($scope) {
         raffle.winners = angular.copy(getTicketNames(raffle.participants));
         shuffleArray(raffle.winners);
         $scope.$apply();
+    };
+
+    $scope.createRaffle = function () {
+        if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
+            return;
+        }
+        ref.push($scope.raffle, function (error) {
+            if (error) {
+                console.log('Synchronization failed');
+            } else {
+                $scope.$apply();
+            }
+        });
     };
 
     function getTicketNames(raffle) {
@@ -193,13 +193,7 @@ function LandingController($scope, $location, restService) {
 
 }
 
-function AdminController($scope) {
-
-
-}
-
 LandingController.$inject = ['$scope', '$location', 'restService'];
 //RaffleController.$inject = ['$scope', 'socket'];
 UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];
-AdminController.$inject = ['$scope'];
