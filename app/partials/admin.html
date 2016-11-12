@@ -19,7 +19,7 @@
         <div class="panel-body">
             <ul class="nav nav-list">
                 <li ng-repeat="raffle in raffles">
-                    {{raffle.name}}
+                    {{raffle.name}} <button class="btn btn-mini btn-close" ng-click="deleteRaffle(raffle)"><i class="icon-remove"></i></button>
                 </li>
 
             </ul>
