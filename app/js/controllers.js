@@ -6,7 +6,7 @@
 
 var fb = firebase.initializeApp({
     apiKey: 'AIzaSyACzmGxAtEhVTCTLNwFEKtmoGheXc43-k8',
-    authDomain: 'raffle-gdgsac.firebaseio.com',
+    authDomain: 'raffle-gdgsac.firebaseapp.com',
     databaseURL: 'https://raffle-gdgsac.firebaseio.com/'
 });
 

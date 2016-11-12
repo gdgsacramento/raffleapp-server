@@ -6,3 +6,4 @@ bower_components
 .idea/
 raffleapp-server.iml
 npm-debug.log
+firebase-debug.log
