@@ -66,8 +66,6 @@ function RaffleController($scope) {
         $scope.raffles.forEach(function (existingRaffle) {
             if (raffle.name === existingRaffle.name) {
                 existingRaffle.participants = raffle.participants;
-                $scope.$apply();
-                return;
             }
         });
     }
@@ -82,31 +80,19 @@ function RaffleController($scope) {
     }
 
     function raffleHasParticipant(raffle, name) {
-        var foundName = false;
-        raffle.participants.forEach(function (existingName) {
-            if (existingName.toLowerCase() === name.toLowerCase()) {
-                foundName = true;
-                return;
-            }
-        });
-        return foundName;
+        return Object.keys(raffle).indexOf(name) >= 0;
     }
 
     $scope.createTicket = function (name, id) {
         var raffle = getRaffle(id);
         if (!raffle.participants) {
-            raffle.participants = [];
+            raffle.participants = {};
         }
         if (!raffleHasParticipant(raffle, name)) {
-            raffle.participants.push(name);
+            console.log('Adding a ticket %s to raffle %s', name, raffle);
             var firebaseRaffle = new Firebase('https://raffle-gdgsac.firebaseio.com/raffles/' + id + '/participants');
-            firebaseRaffle.update(raffle.participants, function (error) {
-                if (error) {
-                    console.log('Synchronization failed');
-                } else {
-                    $scope.$apply();
-                }
-            });
+            var ticketRef = firebaseRaffle.push();
+            ticketRef.set({name: name});
         }
     };
 
@@ -146,10 +132,18 @@ function RaffleController($scope) {
 
     $scope.drawWinners = function (raffle) {
         // Randomize tickets fn.fisherYates(tickets);
-        raffle.winners = angular.copy(raffle.participants);
+        raffle.winners = angular.copy(getTicketNames(raffle.participants));
         shuffleArray(raffle.winners);
         $scope.$apply();
     };
+
+    function getTicketNames(raffle) {
+        var result = [];
+        for (var ticket in raffle) {
+            result.push(ticket.name);
+        }
+        return result;
+    }
 
     /**
      * Randomize array element order in-place.
