@@ -1,12 +1,30 @@
 <div class="span6">
-    <div class="well sidebar-nav">
-        <ul class="nav nav-list">
+    <div class="panel panel-default raffle">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create a new raffle</h3>
+        </div>
+        <div class="panel-body">
             <form class="form-inline">
                 <input type="text"  ng-model="raffle.name" placeholder="Enter raffle name">
                 <button id="create_button" class="btn" ng-click="createRaffle()">Create</button>
             </form>
-        </ul>
-    </div><!--/.well -->
+        </div>
+    </div>
+</div><!--/span-->
+<div class="span6">
+    <div class="panel panel-default raffle">
+        <div class="panel-heading">
+            <h3 class="panel-title">Current list of raffles</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="nav nav-list">
+                <li ng-repeat="raffle in raffles">
+                    {{raffle.name}}
+                </li>
+
+            </ul>
+        </div>
+    </div>
 </div><!--/span-->
 
 
