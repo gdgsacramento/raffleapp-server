@@ -73,6 +73,7 @@ function RaffleController($scope) {
         $scope.raffles.forEach(function (existingRaffle) {
             if (raffle.name === existingRaffle.name) {
                 existingRaffle.participants = raffle.participants;
+                $scope.$apply();
             }
         });
     }
