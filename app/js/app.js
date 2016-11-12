@@ -21,4 +21,30 @@ if ('serviceWorker' in navigator) {
         .then(function () {
             console.log('Service Worker Registered');
         });
+
+    navigator.serviceWorker.ready.then(function (serviceWorkerRegistration) {
+        /*Notification.requestPermission(function (result) {
+            if (result === 'denied') {
+                console.log('Permission wasn\'t granted.');
+                return;
+            } else if (result === 'default') {
+                console.log('The permission request was dismissed.');
+                return;
+            }
+            console.log('Permission was granted for notifications');
+            console.log('Service worker is ready!');
+            console.log('Service worker registration:', JSON.stringify(serviceWorkerRegistration));
+            var options = {
+                "body": "Did you make a $1,000,000 purchase at Dr. Evil...",
+                "icon": "images/icons/icon-32x32.png",
+                "vibrate": [200, 100, 200, 100, 200, 100, 400],
+                "tag": "request",
+                "actions": [
+                    {"action": "yes", "title": "Yes", "icon": "images/icons/icon-32x32.png"},
+                    {"action": "no", "title": "No", "icon": "images/icons/icon-32x32.png"}
+                ]
+            };
+            serviceWorkerRegistration.showNotification('Service worker ready!', options);
+        });*/
+    });
 }

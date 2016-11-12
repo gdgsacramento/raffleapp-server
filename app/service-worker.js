@@ -24,8 +24,7 @@ var filesToCache = [
     '/js/app.js',
     '/js/controllers.js',
     '/js/directives.js',
-    '/js/services.js',
-    '/lib/bootstrap/'
+    '/js/services.js'
 ];
 
 self.addEventListener('install', function(e) {
