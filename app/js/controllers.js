@@ -10,77 +10,31 @@ var fb = firebase.initializeApp({
     databaseURL: 'https://raffle-gdgsac.firebaseio.com/'
 });
 
-function RaffleController($scope) {
-    $scope.raffles = [];
-
+function RaffleController($scope, $firebaseArray) {
     var ref = fb.database().ref('/raffles');
+    $scope.raffles = $firebaseArray(ref);
+    console.log($scope.raffles);
 
-    ref.on('value', function (dataSnapshot) {
-        var raffles = dataSnapshot.val();
-        console.log('Raffle object', raffles);
-        console.log('cloud raffle length =', raffles.length);
-        if (Object.keys(raffles).length > $scope.raffles.length) {
-            addRaffle(raffles);
-        } else if (Object.keys(raffles).length < $scope.raffles.length) {
-            removeRaffle(raffles);
-        }
-    });
+    var firstUpdate = true;
 
-    ref.on('child_changed', function (childSnapshot, prevChildKey) {
-        console.log('child changed');
-        console.log('childsnapshot', childSnapshot.val());
-        console.log('prevChildKey', prevChildKey);
-        getRaffleAndUpdateParticipants(childSnapshot.val());
-    });
+    // var ref = fb.database().ref('/raffles');
 
-    function removeRaffle(raffles) {
-        console.log('Removing raffles based on cloud array:', raffles);
-        var raffleToRemove = null;
-        for (var index = 0; index < $scope.raffles.length; index++) {
-            var scopeRaffle = $scope.raffles[index];
-            if (!raffles[scopeRaffle._id]) {
-                raffleToRemove = index;
-                break;
-            }
-        }
-        if (raffleToRemove !== null) {
-            $scope.raffles.splice(raffleToRemove, 1);
-        }
-    }
+    // ref.on('value', function (dataSnapshot) {
+    //     var raffles = dataSnapshot.val();
+    //     console.log('Raffle object', raffles);
+    //     $scope.raffles = [];
+    //     for (var prop in raffles) {
+    //         var newRaffle = raffles[prop];
+    //         newRaffle.$id = prop;
+    //         $scope.raffles.push(newRaffle);
+    //     }
 
-    function addRaffle(raffles) {
-        console.log('Adding raffles from array:', raffles);
-        for (var prop in raffles) {
-            if (!hasRaffle(prop)) {
-                var newRaffle = raffles[prop];
-                newRaffle._id = prop;
-                $scope.raffles.push(raffles[prop]);
-            }
-        }
-        $scope.$apply();
-    }
+    //     $scope.$apply();
+    // });
 
-    function hasRaffle(id) {
+    function getRaffle(name) {
         for (var i = 0; i < $scope.raffles.length; i++) {
-            if ($scope.raffles[i]._id === id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    function getRaffleAndUpdateParticipants(raffle) {
-        $scope.raffles.forEach(function (existingRaffle) {
-            if (raffle.name === existingRaffle.name) {
-                existingRaffle.participants = raffle.participants;
-                $scope.$apply();
-            }
-        });
-    }
-
-    function getRaffle(id) {
-        for (var i = 0; i < $scope.raffles.length; i++) {
-            if ($scope.raffles[i]._id === id) {
+            if ($scope.raffles[i].$id === name) {
                 return $scope.raffles[i];
             }
         }
@@ -88,42 +42,41 @@ function RaffleController($scope) {
     }
 
     function raffleHasParticipant(raffle, name) {
-        return Object.keys(raffle).indexOf(name) >= 0;
+        var foundName = false;
+        raffle.participants.forEach(function (existingName) {
+            if (existingName.toLowerCase() === name.toLowerCase()) {
+                foundName = true;
+            }
+        });
+        return foundName;
     }
 
     $scope.createTicket = function (name, id) {
         var raffle = getRaffle(id);
-        if (!raffle.participants) {
-            raffle.participants = {};
-        }
-        if (!raffleHasParticipant(raffle, name)) {
-            console.log('Adding a ticket %s to raffle %s', name, raffle);
-            var firebaseRaffle = fb.database().ref('/raffles/' + id + '/participants');
-            var ticketRef = firebaseRaffle.push();
-            ticketRef.set({name: name});
-        }
+            raffle.participantsRef = fb.database().ref('/raffles/' + id + '/participants');
+            raffle.participants = $firebaseArray(raffle.participantsRef);
+            raffle.participants.$add({
+              name: name
+            });
     };
 
     $scope.createRaffle = function () {
         if (!$scope.raffle || !$scope.raffle.name || $scope.raffle.name === "") {
             return;
         }
+        
         ref.push($scope.raffle, function (error) {
             if (error) {
                 console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
             }
         });
     };
 
     $scope.deleteRaffle = function (raffle) {
-        var firebaseRaffle = fb.database().ref('raffles/' + raffle._id);
+        var firebaseRaffle = fb.database().ref('raffles/' + raffle.$id);
         firebaseRaffle.remove(function (error) {
             if (error) {
                 console.log('Synchronization failed');
-            } else {
-                $scope.$apply();
             }
         });
     };
@@ -131,7 +84,7 @@ function RaffleController($scope) {
     $scope.findRaffleById = function (raffleId) {
         for (var i = 0; i < $scope.raffles.length; i++) {
             var raffle = $scope.raffles[i];
-            if (raffle._id === raffleId) {
+            if (raffle.$id === raffleId) {
                 return raffle;
             }
         }
@@ -140,18 +93,9 @@ function RaffleController($scope) {
 
     $scope.drawWinners = function (raffle) {
         // Randomize tickets fn.fisherYates(tickets);
-        raffle.winners = angular.copy(getTicketNames(raffle.participants));
+        raffle.winners = angular.copy(raffle.participants);
         shuffleArray(raffle.winners);
-        $scope.$apply();
     };
-
-    function getTicketNames(raffle) {
-        var result = [];
-        for (var ticket in raffle) {
-            result.push(ticket.name);
-        }
-        return result;
-    }
 
     /**
      * Randomize array element order in-place.
@@ -186,15 +130,10 @@ function UserController($scope, restService) {
 function LandingController($scope, $location, restService) {
 
     restService.getOAuthClientId(function (data) {
-        $scope.clientId = data.client_id;
+        $scope.clientId = data.client$id;
     });
 
     $scope.serverUrl = $location.absUrl().split('landing')[0];
-
-}
-
-function AdminController($scope) {
-
 
 }
 
@@ -202,4 +141,3 @@ LandingController.$inject = ['$scope', '$location', 'restService'];
 //RaffleController.$inject = ['$scope', 'socket'];
 UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];
-AdminController.$inject = ['$scope'];

@@ -8,6 +8,7 @@ This is a firebase application for the gdg raffle app.
   * Install node js/npm
   * Run `npm install`.  This will install dependencies needed for this applicaiton.
   * Run `npm start`.  This should start the server.  It will automatically open a browser pointing to http://localhost:9000 and display the app
+>>>>>>> upstream/master
 
 ##Tests
   * Install and have MongoDB running.  The tests are assuming a local mongo instance.
@@ -32,3 +33,5 @@ This is a firebase application for the gdg raffle app.
   *    to
   *    'raffleapp-server/app/partials/raffle.html
 
+##Start server
+  * Run `gulp serve` to launch gulp tasks and start a local server. The app should show up now in your browser
