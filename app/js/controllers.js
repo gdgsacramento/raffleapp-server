@@ -10,7 +10,7 @@ var fb = firebase.initializeApp({
     databaseURL: 'https://raffle-gdgsac.firebaseio.com/'
 });
 
-function RaffleController($scope) {
+function RaffleController($scope, Administrators) {
     $scope.raffles = [];
 
     var ref = fb.database().ref('/raffles');
@@ -144,6 +144,8 @@ function RaffleController($scope) {
             }
         });
     };
+
+    $scope.isAdminUser = Administrators.isAdminUser;
 
     function getTicketNames(raffle) {
         var result = [];

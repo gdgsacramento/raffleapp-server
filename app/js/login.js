@@ -1,7 +1,7 @@
 'use strict';
 
-ra.controller("LoginController", ["$scope", "$firebaseAuth",
-    function ($scope, $firebaseAuth) {
+ra.controller("LoginController", ["$scope", "$firebaseAuth", "Administrators",
+    function ($scope, $firebaseAuth, Administrators) {
         $scope.auth = $firebaseAuth();
 
         $scope.signIn = function () {
@@ -12,8 +12,10 @@ ra.controller("LoginController", ["$scope", "$firebaseAuth",
             $scope.auth.$signInWithPopup(provider);
         };
 
-        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
-            $scope.firebaseUser = firebaseUser;
+        $firebaseAuth().$onAuthStateChanged(function (user) {
+            $scope.firebaseUser = user;
         });
+
+        $scope.isAdminUser = Administrators.isAdminUser;
     }
 ]);
