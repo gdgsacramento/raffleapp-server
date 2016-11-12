@@ -140,7 +140,13 @@ function LandingController($scope, $location, restService) {
 
 }
 
+function AdminController($scope) {
+
+
+}
+
 LandingController.$inject = ['$scope', '$location', 'restService'];
 //RaffleController.$inject = ['$scope', 'socket'];
 UserController.$inject = ['$scope', 'restService'];
 //RaffleController.$inject = ['$scope', 'mockRestService'];
+AdminController.$inject = ['$scope'];

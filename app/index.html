@@ -24,6 +24,41 @@
 
 </head>
 <body>
-<div ng-view></div>
+
+<div class="navbar navbar-inverse navbar-fixed-top" ng-cloak>
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="#">Raffle Application</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="admin">Admin</a></li>
+                </ul>
+                <ul class="nav pull-right" >
+                    <div ng-show="user.picture" class="brand"><img ng-src="{{user.picture}}?size=25" class="img-rounded"/></div>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.name}}<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="signOutUser()">Sign out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row-fluid" ng-view>
+    </div>
+</div>
+<hr>
+<footer>
+    <p>&copy; GDG Sacramento 2013-2017</p>
+</footer>
 </body>
 </html>
