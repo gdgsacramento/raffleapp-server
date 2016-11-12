@@ -63,7 +63,7 @@
                     </div>
                     <div class="raffle-block">
                         <div class="raffle-left" ng-repeat="participant in raffle.participants">
-                            <span class="label ticket">{{participant}}</span>
+                            <span class="label ticket">{{participant.name}}</span>
                         </div>
                     </div>
                     <div class="raffle-block">
@@ -71,7 +71,7 @@
                             <input class="input-small raffle-input" type="text" ng-model="userName" placeholder="Ticket Name">
                         </div>
                         <div class="raffle-left">
-                            <button class="btn btn-small" ng-click="createTicket(userName, raffle._id, $index); userName=''">Add</button>
+                            <button class="btn btn-small" ng-click="createTicket(userName, raffle.$id, $index); userName=''">Add</button>
                         </div>
                     </div>
                     <div class="raffle-block">
@@ -79,7 +79,7 @@
                     </div>
                     <div class="raffle-block">
                         <div class="raffle-winner" ng-repeat="winner in raffle.winners">
-                            {{$index + 1}}: <span class="label label-warning">{{winner}}</span>
+                            {{$index + 1}}: <span class="label label-warning">{{winner.name}}</span>
                         </div>
                     </div>
 
