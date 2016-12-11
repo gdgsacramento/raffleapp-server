@@ -129,7 +129,6 @@ function RaffleController($scope, Administrators) {
         // Randomize tickets fn.fisherYates(tickets);
         raffle.winners = angular.copy(getTicketNames(raffle.participants));
         shuffleArray(raffle.winners);
-        $scope.$apply();
     };
 
     $scope.createRaffle = function () {
@@ -150,7 +149,7 @@ function RaffleController($scope, Administrators) {
     function getTicketNames(raffle) {
         var result = [];
         for (var ticket in raffle) {
-            result.push(ticket.name);
+            result.push(raffle[ticket].name);
         }
         return result;
     }
