@@ -17,8 +17,6 @@ function RaffleController($scope, Administrators) {
 
     ref.on('value', function (dataSnapshot) {
         var raffles = dataSnapshot.val();
-        console.log('Raffle object', raffles);
-        console.log('cloud raffle length =', raffles.length);
         if (Object.keys(raffles).length > $scope.raffles.length) {
             addRaffle(raffles);
         } else if (Object.keys(raffles).length < $scope.raffles.length) {
@@ -27,14 +25,10 @@ function RaffleController($scope, Administrators) {
     });
 
     ref.on('child_changed', function (childSnapshot, prevChildKey) {
-        console.log('child changed');
-        console.log('childsnapshot', childSnapshot.val());
-        console.log('prevChildKey', prevChildKey);
         getRaffleAndUpdateParticipants(childSnapshot.val());
     });
 
     function removeRaffle(raffles) {
-        console.log('Removing raffles based on cloud array:', raffles);
         var raffleToRemove = null;
         for (var index = 0; index < $scope.raffles.length; index++) {
             var scopeRaffle = $scope.raffles[index];
@@ -49,7 +43,6 @@ function RaffleController($scope, Administrators) {
     }
 
     function addRaffle(raffles) {
-        console.log('Adding raffles from array:', raffles);
         for (var prop in raffles) {
             if (!hasRaffle(prop)) {
                 var newRaffle = raffles[prop];
@@ -73,7 +66,6 @@ function RaffleController($scope, Administrators) {
         $scope.raffles.forEach(function (existingRaffle) {
             if (raffle.name === existingRaffle.name) {
                 existingRaffle.participants = raffle.participants;
-                $scope.$apply();
             }
         });
     }
@@ -97,7 +89,6 @@ function RaffleController($scope, Administrators) {
             raffle.participants = {};
         }
         if (!raffleHasParticipant(raffle, name)) {
-            console.log('Adding a ticket %s to raffle %s', name, raffle);
             var firebaseRaffle = fb.database().ref('/raffles/' + id + '/participants');
             var ticketRef = firebaseRaffle.push();
             ticketRef.set({name: name});
