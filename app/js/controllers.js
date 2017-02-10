@@ -17,9 +17,9 @@ function RaffleController($scope, Administrators) {
 
     ref.on('value', function (dataSnapshot) {
         var raffles = dataSnapshot.val();
-        if (Object.keys(raffles).length > $scope.raffles.length) {
+        if (raffles && Object.keys(raffles).length > $scope.raffles.length) {
             addRaffle(raffles);
-        } else if (Object.keys(raffles).length < $scope.raffles.length) {
+        } else if (raffles && Object.keys(raffles).length < $scope.raffles.length) {
             removeRaffle(raffles);
         }
     });
