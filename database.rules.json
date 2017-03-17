@@ -1,17 +1,17 @@
 {
-    "rules": {
-        ".read": true,
-        ".write": true,
-        "raffles": {
-            "$id": {
-                "participants": {
-                    "$id": {
-                        "name": {
-                            ".validate": "newData.isString() && newData.val().length < 30"
-                        }
-                    }
-                }
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "raffles": {
+      "$id": {
+        "participants": {
+          "$id": {
+            "name": {
+              ".validate": "newData.isString() && newData.val().length < 30"
             }
+          }
         }
+      }
     }
+  }
 }

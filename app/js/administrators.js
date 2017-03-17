@@ -1,8 +1,9 @@
 ra.factory('Administrators', function ($firebaseAuth) {
     var administrators = [];
-    administrators.push('Nathaniel Jenan');
-    administrators.push('Oleg Kalugin');
-    administrators.push('Alain Chautard');
+    administrators.push('njenan@gmail.com');
+    administrators.push('olegspace@gmail.com');
+    administrators.push('achautard@gmail.com');
+    administrators.push('kylesiler@gmail.com');
 
     var firebaseUser;
 
@@ -13,7 +14,7 @@ ra.factory('Administrators', function ($firebaseAuth) {
     return {
         isAdminUser: function () {
             console.log('checking admin status of ', firebaseUser);
-            var isAdmin = firebaseUser && administrators.indexOf(firebaseUser.displayName) >= 0;
+            var isAdmin = firebaseUser && administrators.indexOf(firebaseUser.email) >= 0;
             console.log('admin status', isAdmin);
 
             return isAdmin;
