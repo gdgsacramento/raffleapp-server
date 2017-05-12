@@ -14,7 +14,8 @@ ra.factory('Administrators', function ($firebaseAuth) {
     return {
         isAdminUser: function () {
             console.log('checking admin status of ', firebaseUser);
-            var isAdmin = firebaseUser && administrators.indexOf(firebaseUser.email) >= 0;
+            var isAdmin = firebaseUser && firebaseUser.providerData && firebaseUser.providerData.length > 0 &&
+                administrators.indexOf(firebaseUser.providerData[0].email) >= 0;
             console.log('admin status', isAdmin);
 
             return isAdmin;
