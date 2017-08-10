@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="raffle-block">
-                <button class="btn btn-small" ng-click="drawWinners(raffle)" ng-show="isAdminUser()">Draw Winners</button>
+                <button class="btn btn-small" ng-click="drawWinners(raffle._id)" ng-show="isAdminUser()">Draw Winners</button>
             </div>
             <div class="raffle-block">
                 <div class="raffle-winner" ng-repeat="winner in raffle.winners">

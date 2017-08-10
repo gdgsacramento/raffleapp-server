@@ -116,10 +116,10 @@ function RaffleController($scope, Administrators) {
         return null;
     };
 
-    $scope.drawWinners = function (raffle) {
+    $scope.drawWinners = function (raffleId) {
         // Randomize tickets fn.fisherYates(tickets);
-        raffle.winners = angular.copy(getTicketNames(raffle.participants));
-        shuffleArray(raffle.winners);
+        let raffleRef = fb.database().ref('raffles/' + raffleId);
+        raffleRef.update({drawn: true});
     };
 
     $scope.createRaffle = function () {
