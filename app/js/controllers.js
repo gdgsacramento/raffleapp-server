@@ -66,6 +66,8 @@ function RaffleController($scope, Administrators) {
         $scope.raffles.forEach(function (existingRaffle) {
             if (raffle.name === existingRaffle.name) {
                 existingRaffle.participants = raffle.participants;
+                existingRaffle.winners = raffle.winners;
+                $scope.$apply();
             }
         });
     }
@@ -136,29 +138,6 @@ function RaffleController($scope, Administrators) {
     };
 
     $scope.isAdminUser = Administrators.isAdminUser;
-
-    function getTicketNames(raffle) {
-        var result = [];
-        for (var ticket in raffle) {
-            result.push(raffle[ticket].name);
-        }
-        return result;
-    }
-
-    /**
-     * Randomize array element order in-place.
-     * Using Fisher-Yates shuffle algorithm.
-     */
-    function shuffleArray(array) {
-
-        for (var i = array.length - 1; i > 0; i--) {
-
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-    }
 }
 
 function UserController($scope, restService) {

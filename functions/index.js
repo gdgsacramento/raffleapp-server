@@ -1,8 +1,11 @@
-'use strict';
 const functions = require('firebase-functions');
 
 exports.drawWinners = functions.database.ref('/raffles/{raffleId}/drawn')
     .onWrite(event => {
+        if (event.data.previous.val()) {
+            return Promise.resolve();
+        }
+
         return event.data.ref.parent.child('participants').once('value')
             .then(snapshot => {
                 let winners = getTicketNames(snapshot.val());
