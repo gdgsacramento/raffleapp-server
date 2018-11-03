@@ -66,9 +66,15 @@ function RaffleController($scope, Administrators) {
         $scope.raffles.forEach(function (existingRaffle) {
             if (raffle.name === existingRaffle.name) {
                 existingRaffle.participants = raffle.participants;
-                existingRaffle.winners = raffle.winners;
+                existingRaffle.winners = removeDuplicates(raffle.winners);
                 $scope.$apply();
             }
+        });
+    }
+
+    function removeDuplicates(arr) {
+        return arr.filter(function(item, pos, self) {
+            return self.indexOf(item) == pos;
         });
     }
 
