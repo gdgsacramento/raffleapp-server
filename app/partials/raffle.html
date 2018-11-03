@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="raffle-block">
-                <div class="raffle-left" ng-repeat="participant in raffle.participants">
+                <div class="raffle-left" ng-repeat="participant in raffle.participants track by $index">
                     <span class="label ticket">{{participant.name}}</span>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <button class="btn btn-small" ng-click="drawWinners(raffle._id)" ng-show="isAdminUser()">Draw Winners</button>
             </div>
             <div class="raffle-block">
-                <div class="raffle-winner" ng-repeat="winner in raffle.winners">
+                <div class="raffle-winner" ng-repeat="winner in raffle.winners track by $index">
                     {{$index + 1}}: <span class="label label-warning">{{winner}}</span>
                 </div>
             </div>
