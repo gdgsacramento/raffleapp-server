@@ -74,7 +74,7 @@ function RaffleController($scope, Administrators) {
 
     function removeDuplicates(arr) {
         return arr.filter(function(item, pos, self) {
-            return self.indexOf(item) == pos;
+            return (self.indexOf(item) == pos) && (item != '');
         });
     }
 
